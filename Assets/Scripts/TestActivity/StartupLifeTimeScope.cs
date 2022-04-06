@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace TestActivity
 {
+	[AddComponentMenu(nameof(StartupLifeTimeScope) + " in TestActivity")]
 	public class StartupLifeTimeScope : MonoBehaviour
 	{
 		[SerializeField] private Model _model;
