@@ -586,6 +586,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
+    1: UNITASK_DOTWEEN_SUPPORT
+    4: UNITASK_DOTWEEN_SUPPORT
     7: UNITASK_DOTWEEN_SUPPORT
   platformArchitecture: {}
   scriptingBackend: {}
