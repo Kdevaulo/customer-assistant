@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
+using SettingsActivity.Configs;
+using SettingsActivity.Models;
 using SettingsActivity.Views;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SettingsActivity
 {
@@ -12,19 +13,43 @@ namespace SettingsActivity
     {
         private readonly BackButtonView _backButtonView;
         private readonly DropdownView _dropdownView;
-        private List<string> _filters = new List<string>();
+        private readonly FilterConfig _filterConfig;
 
-        public GameplayController(BackButtonView backButtonView, DropdownView dropdownView)
+        private FiltersModel _filtersModel;
+
+        public GameplayController(BackButtonView backButtonView, DropdownView dropdownView,
+            FilterConfig filterConfig)
         {
             _backButtonView = backButtonView;
             _dropdownView = dropdownView;
+            _filterConfig = filterConfig;
 
             Start();
         }
 
         private void Start()
         {
-            _filters.AddRange(_dropdownView.Dropdown.options.Select(x => x.text));
+            #region filtersModels settings
+
+            var config = _filterConfig;
+
+            _filtersModel = new FiltersModel(config.GetColor(), config.GetSize(), config.GetMaterial(),
+                config.GetSale(), config.GetShop(), config.GetDelivery());
+
+            #endregion
+
+            #region dropdown settings
+
+            _dropdownView.Dropdown.options.Clear();
+
+            var inactiveFilters = _filtersModel.GetInactiveFilters();
+
+            foreach (var item in inactiveFilters)
+            {
+                _dropdownView.Dropdown.options.Add(new Dropdown.OptionData(item.Name));
+            }
+
+            #endregion
 
             _backButtonView.OnBackButtonClicked += BackButtonClickHandler;
             _dropdownView.Dropdown.onValueChanged.AddListener(DropdownValueChangeHandler);
@@ -42,17 +67,19 @@ namespace SettingsActivity
 
             _dropdownView.Dropdown.options.Remove(chosenFilter);
 
-            SwitchFilterOn(chosenFilter.text);
+            EnableFilter(chosenFilter.text);
 
             Debug.Log(chosenFilter.text);
         }
 
-        private void SwitchFilterOn(string filterName)
+        private void EnableFilter(string filterName)
         {
+            Debug.Log(_filtersModel.EnableFilter(filterName));
         }
 
-        private void SwitchFilterOff(string filterName)
+        private void DisableFilter(string filterName)
         {
+            Debug.Log(_filtersModel.DisableFilter(filterName));
         }
     }
 }

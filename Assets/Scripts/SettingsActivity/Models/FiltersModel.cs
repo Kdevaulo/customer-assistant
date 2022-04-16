@@ -1,29 +1,56 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SettingsActivity.Models
 {
-    public class FiltersModel : IFiltersModel
+    public class FiltersModel
     {
-        private List<IFilter> _filters = new List<IFilter>();
+        private readonly List<IFilter> _filters;
+
+        public FiltersModel(params IFilter[] filters)
+        {
+            _filters = filters.ToList();
+        }
+
+        public List<IFilter> GetActiveFilters()
+        {
+            return _filters?.Where(x => x.Enabled).ToList();
+        }
+
+        public List<IFilter> GetInactiveFilters()
+        {
+            return _filters?.Where(x => !x.Enabled).ToList();
+        }
 
         public List<IFilter> GetFilters()
         {
             return _filters;
         }
 
-        public void AddFilter(IFilter filter)
+        public bool EnableFilter(string name)
         {
-            _filters.Add(filter);
+            return ChangeFilterState(name, true);
         }
 
-        public void RemoveFilter(IFilter filter)
+        public bool DisableFilter(string name)
         {
-            _filters.Remove(filter);
+            return ChangeFilterState(name, false);
         }
 
-        public void ClearFilters()
+        private bool ChangeFilterState(string name, bool state)
         {
-            _filters.Clear();
+            var filter = FindFilterByName(name);
+
+            if (filter == null) return false;
+
+            filter.ChangeEnabledState(state);
+
+            return true;
+        }
+
+        private IFilter FindFilterByName(string name)
+        {
+            return _filters.FirstOrDefault(x => x.Name == name);
         }
     }
 }
