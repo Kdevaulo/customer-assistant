@@ -14,12 +14,12 @@ namespace SettingsActivity.Models
 
         public List<IFilter> GetActiveFilters()
         {
-            return _filters?.Where(x => x.Enabled).ToList();
+            return _filters?.Where(x => x.Active).ToList();
         }
 
         public List<IFilter> GetInactiveFilters()
         {
-            return _filters?.Where(x => !x.Enabled).ToList();
+            return _filters?.Where(x => !x.Active).ToList();
         }
 
         public List<IFilter> GetFilters()
@@ -43,7 +43,7 @@ namespace SettingsActivity.Models
 
             if (filter == null) return false;
 
-            filter.ChangeEnabledState(state);
+            filter.ChangeActiveState(state);
 
             return true;
         }

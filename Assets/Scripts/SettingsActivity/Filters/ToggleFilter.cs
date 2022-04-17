@@ -8,19 +8,21 @@ namespace SettingsActivity.Filters
     [Serializable]
     public class ToggleFilter : IFilter
     {
-        public bool Enabled => _enabled;
-
-        public string Name => _name;
-
         [SerializeField] private string _name;
 
-        [SerializeField] private bool _enabled;
+        [SerializeField] private bool _active;
 
         [SerializeField] private List<string> _value;
 
-        public void ChangeEnabledState(bool state)
+        public bool Active => _active;
+
+        public string Name => _name;
+
+        public List<string> Value => _value;
+
+        public void ChangeActiveState(bool state)
         {
-            _enabled = state;
+            _active = state;
         }
     }
 }
