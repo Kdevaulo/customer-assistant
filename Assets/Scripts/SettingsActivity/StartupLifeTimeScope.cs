@@ -10,11 +10,11 @@ namespace SettingsActivity
     {
         [SerializeField] private FilterConfig _filterConfig;
         [SerializeField] private BackButtonView _backButtonView;
-        [SerializeField] private DropdownView _dropdownView;
+        [SerializeField] private FiltersContainerView _filtersContainerView;
 
         private void Start()
         {
-            _ = new GameplayController(_backButtonView, _dropdownView, _filterConfig);
+            _ = new GameplayController(_backButtonView, _filtersContainerView, _filterConfig);
         }
     }
 }

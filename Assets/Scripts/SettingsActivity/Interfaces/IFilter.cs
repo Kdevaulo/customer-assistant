@@ -2,10 +2,10 @@ namespace SettingsActivity
 {
     public interface IFilter
     {
-        bool Enabled { get; }
+        bool Active { get; }
 
         string Name { get; }
 
-        void ChangeEnabledState(bool state);
+        void ChangeActiveState(bool state);
     }
 }
