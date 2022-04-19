@@ -467,8 +467,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchoredPosition: {x: 22, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &382967807
 CanvasRenderer:
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filterConfig: {fileID: 11400000, guid: f50dd261b1f1dc846a5c7c1aa8ff698f, type: 2}
-  _backButtonView: {fileID: 2080181995}
+  _buttonView: {fileID: 2080181995}
   _filtersContainerView: {fileID: 1420751701}
 --- !u!1 &509875974
 GameObject:

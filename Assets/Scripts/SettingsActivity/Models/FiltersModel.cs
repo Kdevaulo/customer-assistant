@@ -26,31 +26,5 @@ namespace SettingsActivity.Models
         {
             return _filters;
         }
-
-        public bool EnableFilter(string name)
-        {
-            return ChangeFilterState(name, true);
-        }
-
-        public bool DisableFilter(string name)
-        {
-            return ChangeFilterState(name, false);
-        }
-
-        private bool ChangeFilterState(string name, bool state)
-        {
-            var filter = FindFilterByName(name);
-
-            if (filter == null) return false;
-
-            filter.ChangeActiveState(state);
-
-            return true;
-        }
-
-        private IFilter FindFilterByName(string name)
-        {
-            return _filters.FirstOrDefault(x => x.Name == name);
-        }
     }
 }

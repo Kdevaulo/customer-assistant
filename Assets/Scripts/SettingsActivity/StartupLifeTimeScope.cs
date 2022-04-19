@@ -9,12 +9,12 @@ namespace SettingsActivity
     public class StartupLifeTimeScope : MonoBehaviour
     {
         [SerializeField] private FilterConfig _filterConfig;
-        [SerializeField] private BackButtonView _backButtonView;
+        [SerializeField] private ButtonView _buttonView;
         [SerializeField] private FiltersContainerView _filtersContainerView;
 
         private void Start()
         {
-            _ = new GameplayController(_backButtonView, _filtersContainerView, _filterConfig);
+            _ = new ActivityController(_buttonView, _filtersContainerView, _filterConfig);
         }
     }
 }
