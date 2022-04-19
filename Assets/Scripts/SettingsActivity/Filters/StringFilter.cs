@@ -7,7 +7,7 @@ using UnityEngine;
 namespace SettingsActivity.Filters
 {
     [Serializable]
-    public class StringFilter : IFilter
+    public class StringFilter : ITypedFilter<string>
     {
         [SerializeField] private string _name;
 
@@ -17,6 +17,16 @@ namespace SettingsActivity.Filters
 
         [SerializeField] private StringFilterView _stringFilterPrefab;
 
+        public void ChangeActiveState(bool state)
+        {
+            _active = state;
+        }
+
+        public void ChangeValue(string value)
+        {
+            _value = value;
+        }
+
         public bool Active => _active;
 
         public string Name => _name;
@@ -24,10 +34,5 @@ namespace SettingsActivity.Filters
         public string Value => _value;
 
         public StringFilterView StringFilterPrefab => _stringFilterPrefab;
-
-        public void ChangeActiveState(bool state)
-        {
-            _active = state;
-        }
     }
 }

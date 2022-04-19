@@ -70,7 +70,7 @@ namespace SettingsActivity
                 switch (item.GetType().Name)
                 {
                     case "BoolFilter":
-                        var boolFilter = (item as BoolFilter);
+                        var boolFilter = item as BoolFilter;
 
                         Assert.IsNotNull(boolFilter);
 
@@ -79,6 +79,7 @@ namespace SettingsActivity
                         SetText(boolFilterView, boolFilter.Name);
                         filterView = boolFilterView;
 
+                        boolFilterView.Toggle.onValueChanged.AddListener(x => ValueChangedHandle(item as BoolFilter, x));
                         boolFilterView.Toggle.SetIsOnWithoutNotify(boolFilter.Value);
 
                         break;
@@ -93,6 +94,8 @@ namespace SettingsActivity
                         SetText(stringFilterView, stringFilter.Name);
                         filterView = stringFilterView;
 
+
+                        stringFilterView.InputField.onValueChanged.AddListener(x => ValueChangedHandle(item as StringFilter, x));
                         stringFilterView.InputField.text = stringFilter.Value;
 
                         break;
@@ -136,13 +139,13 @@ namespace SettingsActivity
 
             RemoveDropOption(chosenFilter);
 
-            var item = _filtersData.First(x => x.Filter.Name == chosenFilter.text);
+            var item = _filtersData.First(x => x.TypedFilter.Name == chosenFilter.text);
 
             var transform = item.RectTransform;
 
             transform.anchoredPosition = new Vector2(0, -_containerTransform.rect.height);
 
-            item.Filter.ChangeActiveState(true);
+            item.TypedFilter.ChangeActiveState(true);
             item.View.gameObject.SetActive(true);
 
             ChangeContainerHeight(transform.sizeDelta.y, true);
@@ -158,17 +161,17 @@ namespace SettingsActivity
             {
                 if (item.View == view)
                 {
-                    item.Filter.ChangeActiveState(false);
+                    item.TypedFilter.ChangeActiveState(false);
                     item.View.gameObject.SetActive(false);
 
-                    var viewName = item.Filter.Name;
+                    var viewName = item.TypedFilter.Name;
 
                     AddDropOption(viewName);
 
                     continue;
                 }
 
-                if (item.Filter.Active)
+                if (item.TypedFilter.Active)
                 {
                     var viewHeight = item.RectTransform.sizeDelta.y;
 
@@ -182,6 +185,11 @@ namespace SettingsActivity
         private void SetText(FilterView view, string text)
         {
             view.TextField.text = text;
+        }
+
+        private void ValueChangedHandle<T, T1>(T filter, T1 value) where T : ITypedFilter<T1>
+        {
+            filter.ChangeValue(value);
         }
 
         private void BackButtonClickHandler()

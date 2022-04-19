@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using SettingsActivity.Filters;
 
 using UnityEngine;
@@ -17,9 +19,9 @@ namespace SettingsActivity.Configs
         [SerializeField] private StringFilter _shop;
         [SerializeField] private BoolFilter _delivery;
 
-        public IFilter[] GetFilters()
+        public List<IFilter> GetFilters()
         {
-            return new IFilter[]
+            return new List<IFilter>
             {
                 _color, /*_size,*/ _material, _sale, _shop, _delivery
             };
