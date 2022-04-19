@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SettingsActivity.Filters
 {
     [Serializable]
-    public class ToggleFilter : IFilter
+    public class ToggleFilter : ITypedFilter<List<string>>
     {
         [SerializeField] private string _name;
 
@@ -23,6 +23,11 @@ namespace SettingsActivity.Filters
         public void ChangeActiveState(bool state)
         {
             _active = state;
+        }
+
+        public void ChangeValue(List<string> value)
+        {
+            _value = value;
         }
     }
 }

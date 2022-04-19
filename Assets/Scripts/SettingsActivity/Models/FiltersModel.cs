@@ -7,9 +7,9 @@ namespace SettingsActivity.Models
     {
         private readonly List<IFilter> _filters;
 
-        public FiltersModel(params IFilter[] filters)
+        public FiltersModel(List<IFilter> filters)
         {
-            _filters = filters.ToList();
+            _filters = filters;
         }
 
         public List<IFilter> GetActiveFilters()
