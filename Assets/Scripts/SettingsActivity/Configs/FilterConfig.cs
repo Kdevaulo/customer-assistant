@@ -23,7 +23,7 @@ namespace SettingsActivity.Configs
         {
             return new List<IFilter>
             {
-                _color, /*_size,*/ _material, _sale, _shop, _delivery
+                _color, _size, _material, _sale, _shop, _delivery
             };
         }
     }

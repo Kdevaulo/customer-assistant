@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,7 @@ namespace SettingsActivity.Views
     public class BoolFilterView : FilterView
     {
         [SerializeField] private Toggle _toggle;
-        
+
         public Toggle Toggle => _toggle;
     }
 }

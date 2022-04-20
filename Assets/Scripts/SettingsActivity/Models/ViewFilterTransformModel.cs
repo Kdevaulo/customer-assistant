@@ -8,20 +8,20 @@ namespace SettingsActivity.Models
     {
         private FilterView _view;
 
-        private IFilter _typedFilter;
+        private IFilter _filter;
 
         private RectTransform _rectTransform;
 
-        public ViewFilterTransformModel(FilterView view, IFilter typedFilter, RectTransform rectTransform)
+        public ViewFilterTransformModel(FilterView view, IFilter filter, RectTransform rectTransform)
         {
             _view = view;
-            _typedFilter = typedFilter;
+            _filter = filter;
             _rectTransform = rectTransform;
         }
 
         public FilterView View => _view;
 
-        public IFilter TypedFilter => _typedFilter;
+        public IFilter Filter => _filter;
 
         public RectTransform RectTransform => _rectTransform;
     }
