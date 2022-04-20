@@ -7,16 +7,17 @@ namespace Dummy
     {
         [SerializeField] private Item[] _items;
         private int _itemIndex;
+        private Sprite _itemImage;
+        public Sprite ItemImage => _itemImage;
         public event Action ItemChanged;
         public event Action<bool> InfoClick;
-        public Sprite ItemImage { get; private set; }
 
         public void NextItem()
         {
             if (_itemIndex < _items.Length - 1)
             {
                 _itemIndex += 1;
-                ItemImage = _items[_itemIndex].ItemImage;
+                _itemImage = _items[_itemIndex].ItemImage;
                 ItemChanged?.Invoke();
             }
         }
@@ -26,7 +27,7 @@ namespace Dummy
             _itemIndex -= 1;
             if (_itemIndex > -1)
             {
-                ItemImage = _items[_itemIndex].ItemImage;
+                _itemImage = _items[_itemIndex].ItemImage;
             }
             else if (_itemIndex <= -1)
             {
@@ -39,28 +40,29 @@ namespace Dummy
         {
             if (_itemIndex == -1)
                 return null;
+
             string descriptionText = $"{_items[_itemIndex].ItemName}\n{_items[_itemIndex].ShopName}\n{_items[_itemIndex].ItemPrice}";
             return descriptionText;
         }
 
         public void ShowInfo(bool clicked)
         {
-            if (ItemImage != null)
-            {
-                InfoClick?.Invoke(clicked);
-            }
+            if (ItemImage == null)
+                return;
+
+            InfoClick?.Invoke(clicked);
         }
 
         private void SetEmptyItem()
         {
             _itemIndex = -1;
-            ItemImage = null;
+            _itemImage = null;
         }
 
         public void Init()
         {
             _itemIndex = 0;
-            ItemImage = _items[_itemIndex].ItemImage;
+            _itemImage = _items[_itemIndex].ItemImage;
         }
     }
 }

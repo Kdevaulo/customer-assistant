@@ -53,6 +53,7 @@
             string descriptionText = _model.GetDescriptionText();
             if (descriptionText == null)
                 return;
+
             _view.SetDescriptionText(descriptionText);
             _view.DescriptionPanel.SetActive(clicked);
         }
