@@ -1,6 +1,6 @@
 namespace SettingsActivity
 {
-    public interface ITypedFilter<T> : IFilter 
+    public interface ITypedFilter<T> : IFilter
     {
         void ChangeValue(T value);
     }

@@ -101,6 +101,23 @@ namespace SettingsActivity
                         break;
 
                     case "ToggleFilter":
+                        var toggleFilter = (item as ToggleFilter);
+
+                        Assert.IsNotNull(toggleFilter);
+
+                        var toggleFilterView = Object.Instantiate(toggleFilter.ToggleFilterPrefab, _filtersContainerView.FiltersContainer);
+
+                        SetText(toggleFilterView, toggleFilter.Name);
+                        filterView = toggleFilterView;
+
+                        foreach (var model in toggleFilterView.ToggleModels)
+                        {
+                            model.Toggle.onValueChanged.AddListener(x =>
+                                ValueChangedHandle(item as ToggleFilter, new StringBoolModel(model.Text.text, x)));
+
+                            var t = toggleFilter.Value.Find(x => x.Text == model.Text.text);
+                            model.Toggle.SetIsOnWithoutNotify(t.Value);
+                        }
 
                         break;
                 }
@@ -139,13 +156,13 @@ namespace SettingsActivity
 
             RemoveDropOption(chosenFilter);
 
-            var item = _filtersData.First(x => x.TypedFilter.Name == chosenFilter.text);
+            var item = _filtersData.First(x => x.Filter.Name == chosenFilter.text);
 
             var transform = item.RectTransform;
 
             transform.anchoredPosition = new Vector2(0, -_containerTransform.rect.height);
 
-            item.TypedFilter.ChangeActiveState(true);
+            item.Filter.ChangeActiveState(true);
             item.View.gameObject.SetActive(true);
 
             ChangeContainerHeight(transform.sizeDelta.y, true);
@@ -161,17 +178,17 @@ namespace SettingsActivity
             {
                 if (item.View == view)
                 {
-                    item.TypedFilter.ChangeActiveState(false);
+                    item.Filter.ChangeActiveState(false);
                     item.View.gameObject.SetActive(false);
 
-                    var viewName = item.TypedFilter.Name;
+                    var viewName = item.Filter.Name;
 
                     AddDropOption(viewName);
 
                     continue;
                 }
 
-                if (item.TypedFilter.Active)
+                if (item.Filter.Active)
                 {
                     var viewHeight = item.RectTransform.sizeDelta.y;
 

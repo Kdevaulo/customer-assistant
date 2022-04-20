@@ -529,6 +529,7 @@ MonoBehaviour:
   _filterConfig: {fileID: 11400000, guid: f50dd261b1f1dc846a5c7c1aa8ff698f, type: 2}
   _buttonView: {fileID: 2080181995}
   _filtersContainerView: {fileID: 1420751701}
+  _tempView: {fileID: 0}
 --- !u!1 &509875974
 GameObject:
   m_ObjectHideFlags: 0
