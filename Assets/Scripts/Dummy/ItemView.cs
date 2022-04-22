@@ -52,9 +52,9 @@ namespace Dummy
             _image.sprite = image;
         }
 
-        public void SetDescriptionText(string text)
+        public void SetDescriptionText(Item item)
         {
-            _itemDescriptionText.text = text;
+            _itemDescriptionText.text = $"{item.Name}\n{item.ShopName}\n{item.Price}";
         }
 
         private void OnNextClick()

@@ -17,7 +17,7 @@ namespace Dummy
             if (_itemIndex < _items.Length - 1)
             {
                 _itemIndex += 1;
-                _itemImage = _items[_itemIndex].ItemImage;
+                _itemImage = _items[_itemIndex].Image;
                 ItemChanged?.Invoke();
             }
         }
@@ -27,7 +27,7 @@ namespace Dummy
             _itemIndex -= 1;
             if (_itemIndex > -1)
             {
-                _itemImage = _items[_itemIndex].ItemImage;
+                _itemImage = _items[_itemIndex].Image;
             }
             else if (_itemIndex <= -1)
             {
@@ -36,13 +36,12 @@ namespace Dummy
             ItemChanged?.Invoke();
         }
 
-        public string GetDescriptionText()
+        public Item GetCurrentItem()
         {
             if (_itemIndex == -1)
                 return null;
 
-            string descriptionText = $"{_items[_itemIndex].ItemName}\n{_items[_itemIndex].ShopName}\n{_items[_itemIndex].ItemPrice}";
-            return descriptionText;
+            return _items[_itemIndex];
         }
 
         public void ShowInfo(bool clicked)
@@ -62,7 +61,7 @@ namespace Dummy
         public void Init()
         {
             _itemIndex = 0;
-            _itemImage = _items[_itemIndex].ItemImage;
+            _itemImage = _items[_itemIndex].Image;
         }
     }
 }
