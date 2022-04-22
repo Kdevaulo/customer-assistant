@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 20484593}
   - component: {fileID: 20484594}
   m_Layer: 5
-  m_Name: Info_toggle
+  m_Name: JacketInfo_toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2041,7 +2041,7 @@ GameObject:
   - component: {fileID: 549320431}
   - component: {fileID: 549320430}
   m_Layer: 5
-  m_Name: ItemInfo_panel
+  m_Name: PantsItemInfo_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2533,7 +2533,7 @@ GameObject:
   - component: {fileID: 1035143210}
   - component: {fileID: 1035143211}
   m_Layer: 5
-  m_Name: ItemInfo_panel
+  m_Name: JacketItemInfo_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2829,7 +2829,7 @@ GameObject:
   - component: {fileID: 1181280413}
   - component: {fileID: 1181280414}
   m_Layer: 5
-  m_Name: ItemMask
+  m_Name: ItemLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4491,7 +4491,7 @@ GameObject:
   - component: {fileID: 1659927783}
   - component: {fileID: 1659927784}
   m_Layer: 5
-  m_Name: Info_toggle
+  m_Name: T-ShirtInfo_toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4833,7 +4833,7 @@ GameObject:
   - component: {fileID: 2039399505}
   - component: {fileID: 2039399508}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: Mode_dropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5059,7 +5059,7 @@ GameObject:
   - component: {fileID: 2084593706}
   - component: {fileID: 2084593705}
   m_Layer: 5
-  m_Name: ItemInfo_panel
+  m_Name: T-ShirtItemInfo_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5162,7 +5162,7 @@ GameObject:
   - component: {fileID: 2109996405}
   - component: {fileID: 2109996406}
   m_Layer: 5
-  m_Name: Info_toggle
+  m_Name: PantsInfo_toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
