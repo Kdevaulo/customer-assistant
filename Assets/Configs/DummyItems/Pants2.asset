@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695961b63651e0c49889afe1ca6ac0d7, type: 3}
   m_Name: Pants2
   m_EditorClassIdentifier: 
-  _itemName: "\u0428\u0442\u0430\u043D\u044B2"
-  _itemIMage: {fileID: 21300000, guid: 501876094d59acf449e41d343f524db7, type: 3}
+  _name: "\u0414\u0436\u0438\u043D\u0441\u044B"
+  _image: {fileID: 21300000, guid: 501876094d59acf449e41d343f524db7, type: 3}
   _price: 4500
   _shopName: BestPants

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695961b63651e0c49889afe1ca6ac0d7, type: 3}
   m_Name: T-Shirt2
   m_EditorClassIdentifier: 
-  _itemName: "\u0424\u0443\u0442\u0431\u043E\u043B\u043A\u04302"
-  _itemIMage: {fileID: 21300000, guid: 9441674b78ef4e44abff41be2a0ce581, type: 3}
+  _name: "\u0424\u0443\u0442\u0431\u043E\u043B\u043A\u04302"
+  _image: {fileID: 21300000, guid: 9441674b78ef4e44abff41be2a0ce581, type: 3}
   _price: 2560
   _shopName: MilitaryShop
