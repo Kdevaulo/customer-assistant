@@ -40,6 +40,14 @@
 
         private void OnItemChange()
         {
+            if (_model.ItemImage == null)
+            {
+                _view.ButtonImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                _view.ButtonImage.gameObject.SetActive(true);
+            }
             _view.SetIcon(_model.ItemImage);
             _view.DescriptionPanel.SetActive(false);
             _view.InfoToggle.isOn = false;
