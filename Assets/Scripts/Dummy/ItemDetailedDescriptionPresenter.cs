@@ -24,7 +24,7 @@
         private void OnOpenDescription()
         {
             _view.SetIcon(_model.ItemImage);
-            _view.SetDescriptionText(_model.GetDescriptionText());
+            _view.SetDescriptionText(_model.GetCurrentItem());
         }
     }
 }

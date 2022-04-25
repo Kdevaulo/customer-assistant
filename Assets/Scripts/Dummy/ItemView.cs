@@ -7,6 +7,7 @@ namespace Dummy
     public class ItemView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer _image;
+        [SerializeField] private Image _buttonImage;
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _previousButton;
         [SerializeField] private Text _itemDescriptionText;
@@ -14,6 +15,7 @@ namespace Dummy
         [SerializeField] private GameObject _descriptionPanel;
         public GameObject DescriptionPanel => _descriptionPanel;
         public Toggle InfoToggle => _infoToggle;
+        public Image ButtonImage => _buttonImage;
         public event Action NextClick;
         public event Action PreviousClick;
         public event Action<bool> InfoClick;
@@ -45,16 +47,20 @@ namespace Dummy
         {
             if (_image == null)
                 throw new InvalidOperationException();
+
+            _buttonImage.alphaHitTestMinimumThreshold = 0.1f;
         }
 
         public void SetIcon(Sprite image)
         {
             _image.sprite = image;
+            _buttonImage.sprite = image;
+            _buttonImage.SetNativeSize();
         }
 
-        public void SetDescriptionText(string text)
+        public void SetDescriptionText(Item item)
         {
-            _itemDescriptionText.text = text;
+            _itemDescriptionText.text = $"{item.Name}\n{item.ShopName}\n{item.Price}";
         }
 
         private void OnNextClick()
