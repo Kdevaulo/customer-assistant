@@ -4,10 +4,12 @@
     {
         private ItemModel _model;
         private ItemDetailedDescriptionView _view;
+        private DummyMainView _mainView;
 
-        public ItemDetailedDescriptionPresenter(ItemDetailedDescriptionView view, ItemModel model)
+        public ItemDetailedDescriptionPresenter(ItemDetailedDescriptionView view, DummyMainView mainView, ItemModel model)
         {
             _view = view;
+            _mainView = mainView;
             _model = model;
         }
 
@@ -18,13 +20,14 @@
 
         public void Disable()
         {
-            _view.OpenDescription += OnOpenDescription;
+            _view.OpenDescription -= OnOpenDescription;
         }
 
         private void OnOpenDescription()
         {
             _view.SetIcon(_model.ItemImage);
             _view.SetDescriptionText(_model.GetCurrentItem());
+            _mainView.CloseInfoPanels();
         }
     }
 }
