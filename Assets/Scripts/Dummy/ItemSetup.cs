@@ -13,7 +13,7 @@ namespace Dummy
         {
             _presenter = new ItemPresenter(_view, _mainView, _model);
             _model.Init();
-            _view.SetIcon(_model.ItemImage);
+            _view.SetButtonShape(_model.ItemImage);
         }
 
         private void OnEnable()

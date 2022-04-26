@@ -9,6 +9,7 @@ namespace Dummy
         private int _itemIndex;
         private Sprite _itemImage;
         public Sprite ItemImage => _itemImage;
+        public int ItemIndex => _itemIndex;
         public event Action ItemChanged;
         public event Action<bool> InfoClick;
 

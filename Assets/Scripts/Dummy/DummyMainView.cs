@@ -1,16 +1,25 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 namespace Dummy
 {
     public class DummyMainView : MonoBehaviour, IPointerClickHandler
     {
-        public event Action DescriptionClose;
+        [SerializeField] private Toggle[] _infoToggles;
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            DescriptionClose?.Invoke();
+            CloseInfoPanels();
+        }
+
+        public void CloseInfoPanels()
+        {
+            foreach(Toggle toggle in _infoToggles)
+            {
+                toggle.isOn = false;
+            }
         }
     }
 }

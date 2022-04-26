@@ -20,7 +20,6 @@
             _view.NextClick += OnViewNextClick;
             _view.PreviousClick += OnViewPreviousClick;
             _view.InfoClick += OnViewClick;
-            _mainView.DescriptionClose += OnDescriptionClose;
         }
 
         private void OnDescriptionClose()
@@ -35,7 +34,6 @@
             _view.NextClick -= OnViewNextClick;
             _view.PreviousClick -= OnViewPreviousClick;
             _view.InfoClick -= OnViewClick;
-            _mainView.DescriptionClose -= OnDescriptionClose;
         }
 
         private void OnItemChange()
@@ -48,9 +46,9 @@
             {
                 _view.ButtonImage.gameObject.SetActive(true);
             }
-            _view.SetIcon(_model.ItemImage);
-            _view.DescriptionPanel.SetActive(false);
-            _view.InfoToggle.isOn = false;
+            _view.SetButtonShape(_model.ItemImage);
+            _view.EnableItemObject(_model.ItemIndex);
+            _mainView.CloseInfoPanels();
         }
 
         private void OnViewNextClick()
