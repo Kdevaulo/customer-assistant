@@ -6,7 +6,7 @@ namespace Dummy
 {
     public class ItemView : MonoBehaviour
     {
-        [SerializeField] private GameObject[] _itemObjects;
+        [SerializeField] private SpriteRenderer[] _itemObjects;
         [SerializeField] private Image _buttonImage;
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _previousButton;
@@ -48,7 +48,6 @@ namespace Dummy
             if (_itemObjects == null)
                 throw new InvalidOperationException();
 
-            EnableItemObject(0);
             _buttonImage.alphaHitTestMinimumThreshold = 0.1f;
         }
 
@@ -63,17 +62,17 @@ namespace Dummy
             _itemDescriptionText.text = $"{item.Name}\n{item.ShopName}\n{item.Price}";
         }
 
-        public void EnableItemObject(int id)
+        public void EnableItemObject(Sprite image)
         {
             for (int i = 0; i < _itemObjects.Length; i++)
             {
-                if (i == id)
+                if (_itemObjects[i].sprite == image)
                 {
-                    _itemObjects[i].SetActive(true);
+                    _itemObjects[i].gameObject.SetActive(true);
                 }
                 else
                 {
-                    _itemObjects[i].SetActive(false);
+                    _itemObjects[i].gameObject.SetActive(false);
                 }
             }
         }

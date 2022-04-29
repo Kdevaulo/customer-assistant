@@ -47,7 +47,7 @@
                 _view.ButtonImage.gameObject.SetActive(true);
             }
             _view.SetButtonShape(_model.ItemImage);
-            _view.EnableItemObject(_model.ItemIndex);
+            _view.EnableItemObject(_model.ItemImage);
             _mainView.CloseInfoPanels();
         }
 
