@@ -17,12 +17,12 @@ namespace SettingsActivity.Filters
 
         [SerializeField] private StringFilterView _stringFilterPrefab;
 
-        public void ChangeActiveState(bool state)
+        void IFilter.ChangeActiveState(bool state)
         {
             _active = state;
         }
 
-        public void ChangeValue(string value)
+        void ITypedFilter<string>.ChangeValue(string value)
         {
             _value = value;
         }

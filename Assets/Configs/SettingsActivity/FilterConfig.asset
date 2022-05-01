@@ -20,7 +20,7 @@ MonoBehaviour:
       type: 3}
   _size:
     _name: "\u0420\u0430\u0437\u043C\u0435\u0440"
-    _active: 1
+    _active: 0
     _value:
     - _text: XS
       _value: 0
@@ -39,6 +39,12 @@ MonoBehaviour:
     _active: 0
     _value: 
     _stringFilterPrefab: {fileID: 8553809565136525595, guid: d4e2950023892cc499563a2fd9acba57,
+      type: 3}
+  _price:
+    _name: "\u0426\u0435\u043D\u0430"
+    _active: 0
+    _value: {x: 0, y: 0}
+    _intRangeFilterPrefab: {fileID: 8148953298541238076, guid: e1c598bd7ca000f4abe07be713f13521,
       type: 3}
   _sale:
     _name: "\u041D\u0430\u043B\u0438\u0447\u0438\u0435 \u0441\u043A\u0438\u0434\u043A\u0438"

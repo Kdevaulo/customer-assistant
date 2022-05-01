@@ -20,12 +20,12 @@ namespace SettingsActivity.Filters
 
         [SerializeField] private ToggleFilterView _toggleFilterPrefab;
 
-        public void ChangeActiveState(bool state)
+        void IFilter.ChangeActiveState(bool state)
         {
             _active = state;
         }
 
-        public void ChangeValue(StringBoolModel item)
+        void ITypedFilter<StringBoolModel>.ChangeValue(StringBoolModel item)
         {
             var model = _value.First(x => x.Text == item.Text);
 
