@@ -7,22 +7,22 @@ using UnityEngine;
 namespace SettingsActivity.Filters
 {
     [Serializable]
-    public class BoolFilter : ITypedFilter<bool>
+    public class IntRangeFilter : ITypedFilter<Vector2Int>
     {
         [SerializeField] private string _name;
 
         [SerializeField] private bool _active;
 
-        [SerializeField] private bool _value;
+        [SerializeField] private Vector2Int _value;
 
-        [SerializeField] private BoolFilterView _boolFilterPrefab;
+        [SerializeField] private IntRangeView _intRangeFilterPrefab;
 
         void IFilter.ChangeActiveState(bool state)
         {
             _active = state;
         }
 
-        void ITypedFilter<bool>.ChangeValue(bool value)
+        void ITypedFilter<Vector2Int>.ChangeValue(Vector2Int value)
         {
             _value = value;
         }
@@ -31,8 +31,8 @@ namespace SettingsActivity.Filters
 
         public string Name => _name;
 
-        public bool Value => _value;
+        public Vector2Int Value => _value;
 
-        public BoolFilterView BoolFilterPrefab => _boolFilterPrefab;
+        public IntRangeView IntRangeFilterPrefab => _intRangeFilterPrefab;
     }
 }

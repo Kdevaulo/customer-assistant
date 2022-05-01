@@ -11,10 +11,8 @@ namespace SettingsActivity.Configs
     {
         [SerializeField] private StringFilter _color;
         [SerializeField] private ToggleFilter _size;
-
         [SerializeField] private StringFilter _material;
-
-        //todo: add pricefilter (Slider)
+        [SerializeField] private IntRangeFilter _price;
         [SerializeField] private BoolFilter _sale;
         [SerializeField] private StringFilter _shop;
         [SerializeField] private BoolFilter _delivery;
@@ -23,7 +21,7 @@ namespace SettingsActivity.Configs
         {
             return new List<IFilter>
             {
-                _color, _size, _material, _sale, _shop, _delivery
+                _color, _size, _material, _price, _sale, _shop, _delivery
             };
         }
     }
