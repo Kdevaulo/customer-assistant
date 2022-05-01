@@ -3,11 +3,13 @@
     public class ItemPresenter
     {
         private ItemView _view;
+        private DummyMainView _mainView;
         private ItemModel _model;
 
-        public ItemPresenter(ItemView view, ItemModel model)
+        public ItemPresenter(ItemView view, DummyMainView mainView, ItemModel model)
         {
             _view = view;
+            _mainView = mainView;
             _model = model;
         }
 
@@ -18,6 +20,11 @@
             _view.NextClick += OnViewNextClick;
             _view.PreviousClick += OnViewPreviousClick;
             _view.InfoClick += OnViewClick;
+        }
+
+        private void OnDescriptionClose()
+        {
+            _view.InfoToggle.isOn = false;
         }
 
         public void Disable()
@@ -31,9 +38,17 @@
 
         private void OnItemChange()
         {
-            _view.SetIcon(_model.ItemImage);
-            _view.DescriptionPanel.SetActive(false);
-            _view.InfoToggle.isOn = false;
+            if (_model.ItemImage == null)
+            {
+                _view.ButtonImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                _view.ButtonImage.gameObject.SetActive(true);
+            }
+            _view.SetButtonShape(_model.ItemImage);
+            _view.EnableItemObject(_model.ItemIndex);
+            _mainView.CloseInfoPanels();
         }
 
         private void OnViewNextClick()
@@ -50,11 +65,11 @@
 
         private void OnInfoClick(bool clicked)
         {
-            string descriptionText = _model.GetDescriptionText();
-            if (descriptionText == null)
+            Item selectedItem = _model.GetCurrentItem();
+            if (selectedItem == null)
                 return;
 
-            _view.SetDescriptionText(descriptionText);
+            _view.SetDescriptionText(selectedItem);
             _view.DescriptionPanel.SetActive(clicked);
         }
 

@@ -24,9 +24,11 @@ namespace Dummy
             _itemImage.SetNativeSize();
         }
 
-        public void SetDescriptionText(string text)
+        public void SetDescriptionText(Item item)
         {
-            _descriptionText.text = text;
+            _descriptionText.text = $"{item.Name}\n";
+            _descriptionText.text += $"Цена: {item.Price}\n";
+            _descriptionText.text += $"Производитель: {item.ShopName}";
         }
     }
 }
