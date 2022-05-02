@@ -1,4 +1,5 @@
 ﻿using SettingsActivity.Configs;
+using SettingsActivity.Controllers;
 using SettingsActivity.Views;
 
 using UnityEngine;
@@ -9,7 +10,9 @@ namespace SettingsActivity
     public class StartupLifeTimeScope : MonoBehaviour
     {
         [SerializeField] private FilterConfig _filterConfig;
+        
         [SerializeField] private ButtonView _buttonView;
+        
         [SerializeField] private FiltersContainerView _filtersContainerView;
 
         private void Start()

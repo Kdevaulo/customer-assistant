@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 using Object = UnityEngine.Object;
 
-namespace SettingsActivity
+namespace SettingsActivity.Controllers
 {
     public class ActivityController : IDisposable
     {
@@ -38,8 +38,8 @@ namespace SettingsActivity
 
         void IDisposable.Dispose()
         {
-            _backButtonView.ButtonClicked -= BackButtonClickHandler;
-            _filtersContainerView.Dropdown.onValueChanged.RemoveListener(AddFilterHandle);
+            _backButtonView.ButtonClicked -= HandleBackButtonClick;
+            _filtersContainerView.Dropdown.onValueChanged.RemoveListener(HandleFilterAddition);
         }
 
         private void Initialize()
@@ -79,7 +79,7 @@ namespace SettingsActivity
                         SetText(boolFilterView, boolFilter.Name);
                         filterView = boolFilterView;
 
-                        boolFilterView.Toggle.onValueChanged.AddListener(x => ValueChangedHandle(item as BoolFilter, x));
+                        boolFilterView.Toggle.onValueChanged.AddListener(x => ChangeFilterValue(item as BoolFilter, x));
                         boolFilterView.Toggle.SetIsOnWithoutNotify(boolFilter.Value);
 
                         break;
@@ -94,8 +94,7 @@ namespace SettingsActivity
                         SetText(stringFilterView, stringFilter.Name);
                         filterView = stringFilterView;
 
-
-                        stringFilterView.InputField.onValueChanged.AddListener(x => ValueChangedHandle(item as StringFilter, x));
+                        stringFilterView.InputField.onValueChanged.AddListener(x => ChangeFilterValue(item as StringFilter, x));
                         stringFilterView.InputField.text = stringFilter.Value;
 
                         break;
@@ -113,18 +112,43 @@ namespace SettingsActivity
                         foreach (var model in toggleFilterView.ToggleModels)
                         {
                             model.Toggle.onValueChanged.AddListener(x =>
-                                ValueChangedHandle(item as ToggleFilter, new StringBoolModel(model.Text.text, x)));
+                                ChangeFilterValue(item as ToggleFilter, new StringBoolModel(model.Text.text, x)));
 
                             var t = toggleFilter.Value.Find(x => x.Text == model.Text.text);
                             model.Toggle.SetIsOnWithoutNotify(t.Value);
                         }
 
                         break;
+
+                    case "IntRangeFilter":
+                        var intRangeFilter = (item as IntRangeFilter);
+
+                        Assert.IsNotNull(intRangeFilter);
+
+                        var intRangeFilterView =
+                            Object.Instantiate(intRangeFilter.IntRangeFilterPrefab, _filtersContainerView.FiltersContainer);
+
+                        SetText(intRangeFilterView, intRangeFilter.Name);
+                        filterView = intRangeFilterView;
+
+                        var minInputField = intRangeFilterView.MinInputField;
+                        var maxInputField = intRangeFilterView.MaxInputField;
+
+                        intRangeFilterView.MinInputField.text = intRangeFilter.Value.x.ToString();
+                        intRangeFilterView.MaxInputField.text = intRangeFilter.Value.y.ToString();
+
+                        minInputField.onValueChanged.AddListener(x =>
+                            ChangeFilterValue(item as IntRangeFilter, new Vector2Int(ParseToInt(x), intRangeFilter.Value.y)));
+
+                        maxInputField.onValueChanged.AddListener(y =>
+                            ChangeFilterValue(item as IntRangeFilter, new Vector2Int(intRangeFilter.Value.x, ParseToInt(y))));
+
+                        break;
                 }
 
                 Assert.IsNotNull(filterView, "filterView == null");
 
-                filterView.RemoveButton.ButtonClicked += () => RemoveFilterHandle(filterView);
+                filterView.RemoveButton.ButtonClicked += () => HandleFilterRemoving(filterView);
 
                 var viewTransform = filterView.GetComponent<RectTransform>();
 
@@ -146,11 +170,16 @@ namespace SettingsActivity
 
             #endregion
 
-            _backButtonView.ButtonClicked += BackButtonClickHandler;
-            _filtersContainerView.Dropdown.onValueChanged.AddListener(AddFilterHandle);
+            _backButtonView.ButtonClicked += HandleBackButtonClick;
+            _filtersContainerView.Dropdown.onValueChanged.AddListener(HandleFilterAddition);
         }
 
-        private void AddFilterHandle(int value)
+        private int ParseToInt(string value)
+        {
+            return int.TryParse(value, out int result) ? result : 0;
+        }
+
+        private void HandleFilterAddition(int value)
         {
             var chosenFilter = _filtersContainerView.Dropdown.options[value];
 
@@ -170,7 +199,7 @@ namespace SettingsActivity
             Debug.Log(chosenFilter.text);
         }
 
-        private void RemoveFilterHandle(FilterView view)
+        private void HandleFilterRemoving(FilterView view)
         {
             ClearContainerHeight();
 
@@ -204,12 +233,12 @@ namespace SettingsActivity
             view.TextField.text = text;
         }
 
-        private void ValueChangedHandle<T, T1>(T filter, T1 value) where T : ITypedFilter<T1>
+        private void ChangeFilterValue<T, T1>(T filter, T1 value) where T : ITypedFilter<T1>
         {
             filter.ChangeValue(value);
         }
 
-        private void BackButtonClickHandler()
+        private void HandleBackButtonClick()
         {
             // todo: to dummy's activity
             Debug.Log("BackButton pressed");
