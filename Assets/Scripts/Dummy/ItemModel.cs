@@ -118,6 +118,7 @@ namespace Dummy
             BoolFilter sale = null;
             StringFilter shop = null;
             BoolFilter delivery = null;
+            IntRangeFilter price = null;
 
             bool colorMatch = false;
             bool sizeMatch = false;
@@ -125,6 +126,7 @@ namespace Dummy
             bool saleMatch = false;
             bool shopMatch = false;
             bool deliveryMatch = false;
+            bool priceMatch = false;
 
             foreach (Item item in _items)
             {
@@ -165,6 +167,12 @@ namespace Dummy
                         delivery = (BoolFilter)filter;
                         deliveryMatch = delivery.Value == item.Delivery;
                         filterValues.Add(deliveryMatch);
+                    }
+                    else if (filter.Name == "Цена")
+                    {
+                        price = (IntRangeFilter)filter;
+                        priceMatch = item.Price >= price.Value.x && item.Price <= price.Value.y;
+                        filterValues.Add(priceMatch);
                     }
                 }
 
