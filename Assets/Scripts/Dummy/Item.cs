@@ -9,7 +9,7 @@ namespace Dummy
     {
         [SerializeField] private string _name;
         [SerializeField] private Sprite _image;
-        [SerializeField] private float _price;
+        [SerializeField] private int _price;
         [SerializeField] private string _shopName;
         [SerializeField] private string _color;
         [SerializeField] private string _material;
@@ -19,7 +19,7 @@ namespace Dummy
 
         public string Name => _name;
         public Sprite Image => _image;
-        public float Price => _price;
+        public int Price => _price;
         public string ShopName => _shopName;
         public string Color => _color;
         public string Material => _material;
