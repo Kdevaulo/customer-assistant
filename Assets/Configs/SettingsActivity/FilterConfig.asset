@@ -42,8 +42,8 @@ MonoBehaviour:
       type: 3}
   _price:
     _name: "\u0426\u0435\u043D\u0430"
-    _active: 0
-    _value: {x: 0, y: 0}
+    _active: 1
+    _value: {x: 1300, y: 6000}
     _intRangeFilterPrefab: {fileID: 8148953298541238076, guid: e1c598bd7ca000f4abe07be713f13521,
       type: 3}
   _sale:
