@@ -195,8 +195,6 @@ namespace SettingsActivity.Controllers
             item.View.gameObject.SetActive(true);
 
             ChangeContainerHeight(transform.sizeDelta.y, true);
-
-            Debug.Log(chosenFilter.text);
         }
 
         private void HandleFilterRemoving(FilterView view)
