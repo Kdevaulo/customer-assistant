@@ -13,7 +13,16 @@ namespace Dummy
         {
             _presenter = new ItemPresenter(_view, _mainView, _model);
             _model.Init();
-            _view.SetButtonShape(_model.ItemImage);
+
+            if (_model.ItemImage == null)
+            {
+                _view.ButtonImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                _view.SetButtonShape(_model.ItemImage);
+                _view.EnableItemObject(_model.ItemImage);
+            }
         }
 
         private void OnEnable()
