@@ -25,11 +25,11 @@ MonoBehaviour:
     - _text: XS
       _value: 1
     - _text: S
-      _value: 1
+      _value: 0
     - _text: M
       _value: 0
     - _text: L
-      _value: 1
+      _value: 0
     - _text: XL
       _value: 0
     _toggleFilterPrefab: {fileID: 2797334778999114886, guid: 4663b5868486fa448bbf07705b66630e,
@@ -42,14 +42,14 @@ MonoBehaviour:
       type: 3}
   _price:
     _name: "\u0426\u0435\u043D\u0430"
-    _active: 1
+    _active: 0
     _value: {x: 1300, y: 6000}
     _intRangeFilterPrefab: {fileID: 8148953298541238076, guid: e1c598bd7ca000f4abe07be713f13521,
       type: 3}
   _sale:
     _name: "\u041D\u0430\u043B\u0438\u0447\u0438\u0435 \u0441\u043A\u0438\u0434\u043A\u0438"
     _active: 0
-    _value: 1
+    _value: 0
     _boolFilterPrefab: {fileID: 2086288438458510138, guid: 709349a2ec379bb498d5962d00bf9f66,
       type: 3}
   _shop:
