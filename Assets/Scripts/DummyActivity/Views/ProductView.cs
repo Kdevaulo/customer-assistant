@@ -1,24 +1,32 @@
 ﻿using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Dummy
+using DummyActivity.Configs;
+
+namespace DummyActivity.Views
 {
-    public class ItemView : MonoBehaviour
+    public class ProductView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer[] _itemObjects;
-        [SerializeField] private Image _buttonImage;
+
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _previousButton;
+
+        [SerializeField] private Image _buttonImage;
         [SerializeField] private Text _itemDescriptionText;
         [SerializeField] private Toggle _infoToggle;
-        [SerializeField] private GameObject _descriptionPanel;
-        public GameObject DescriptionPanel => _descriptionPanel;
-        public Toggle InfoToggle => _infoToggle;
-        public Image ButtonImage => _buttonImage;
+
+        [SerializeField] private ProductDetailedDescriptionView _descriptionPanel;
+
         public event Action NextClick;
         public event Action PreviousClick;
         public event Action<bool> InfoClick;
+
+        public ProductDetailedDescriptionView DescriptionPanel => _descriptionPanel;
+        public Toggle InfoToggle => _infoToggle;
+        public Image ButtonImage => _buttonImage;
 
         private void OnEnable()
         {
@@ -31,6 +39,7 @@ namespace Dummy
                 enabled = false;
                 throw e;
             }
+
             _nextButton.onClick.AddListener(OnNextClick);
             _previousButton.onClick.AddListener(OnPreviousClick);
             _infoToggle.onValueChanged.AddListener(OnInfoClick);
@@ -43,23 +52,15 @@ namespace Dummy
             _infoToggle.onValueChanged.RemoveListener(OnInfoClick);
         }
 
-        private void Validate()
-        {
-            if (_itemObjects == null)
-                throw new InvalidOperationException();
-
-            _buttonImage.alphaHitTestMinimumThreshold = 0.1f;
-        }
-
         public void SetButtonShape(Sprite image)
         {
             _buttonImage.sprite = image;
             _buttonImage.SetNativeSize();
         }
 
-        public void SetDescriptionText(Item item)
+        public void SetDescriptionText(Product item)
         {
-            _itemDescriptionText.text = $"{item.Name}\n{item.ShopName}\n{item.Price}";
+            _itemDescriptionText.text = $"{item.Name}\n{item.Shop.Name}\n{item.Price}";
         }
 
         public void EnableItemObject(Sprite image)
@@ -77,6 +78,14 @@ namespace Dummy
             }
         }
 
+        private void Validate()
+        {
+            if (_itemObjects == null)
+                throw new InvalidOperationException();
+
+            _buttonImage.alphaHitTestMinimumThreshold = 0.1f;
+        }
+
         private void OnNextClick()
         {
             NextClick?.Invoke();
@@ -90,6 +99,7 @@ namespace Dummy
         private void OnInfoClick(bool clicked)
         {
             clicked = _infoToggle.isOn;
+
             InfoClick?.Invoke(clicked);
         }
     }

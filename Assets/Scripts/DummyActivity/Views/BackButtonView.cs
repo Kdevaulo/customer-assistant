@@ -1,18 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Dummy
+namespace DummyActivity.Views
 {
     [RequireComponent(typeof(Button))]
-    public class BackButton : MonoBehaviour
+    public class BackButtonView : MonoBehaviour
     {
         [SerializeField] private GameObject _menu;
-        private Button _backButton;
 
-        private void Awake()
-        {
-            _backButton = GetComponent<Button>();
-        }
+        [SerializeField] private Button _backButton;
 
         private void OnEnable()
         {
