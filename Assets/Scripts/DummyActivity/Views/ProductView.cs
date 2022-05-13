@@ -28,6 +28,30 @@ namespace DummyActivity.Views
         public Toggle InfoToggle => _infoToggle;
         public Image ButtonImage => _buttonImage;
 
+        private void OnEnable()
+        {
+            try
+            {
+                Validate();
+            }
+            catch (Exception e)
+            {
+                enabled = false;
+                throw e;
+            }
+
+            _nextButton.onClick.AddListener(OnNextClick);
+            _previousButton.onClick.AddListener(OnPreviousClick);
+            _infoToggle.onValueChanged.AddListener(OnInfoClick);
+        }
+
+        private void OnDisable()
+        {
+            _nextButton?.onClick.RemoveListener(OnNextClick);
+            _previousButton?.onClick.RemoveListener(OnPreviousClick);
+            _infoToggle.onValueChanged.RemoveListener(OnInfoClick);
+        }
+
         public void SetButtonShape(Sprite image)
         {
             _buttonImage.sprite = image;
@@ -52,30 +76,6 @@ namespace DummyActivity.Views
                     _itemObjects[i].gameObject.SetActive(false);
                 }
             }
-        }
-
-        private void OnEnable()
-        {
-            try
-            {
-                Validate();
-            }
-            catch (Exception e)
-            {
-                enabled = false;
-                throw e;
-            }
-
-            _nextButton.onClick.AddListener(OnNextClick);
-            _previousButton.onClick.AddListener(OnPreviousClick);
-            _infoToggle.onValueChanged.AddListener(OnInfoClick);
-        }
-
-        private void OnDisable()
-        {
-            _nextButton?.onClick.RemoveListener(OnNextClick);
-            _previousButton?.onClick.RemoveListener(OnPreviousClick);
-            _infoToggle.onValueChanged.RemoveListener(OnInfoClick);
         }
 
         private void Validate()

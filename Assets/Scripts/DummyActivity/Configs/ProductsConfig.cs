@@ -9,8 +9,6 @@ namespace DummyActivity.Configs
     {
         [SerializeField] private List<Product> _products = new List<Product>();
 
-        public List<Product> Products => _products;
-
         public List<Product> GetProductsOfType(Product.ClothesType type)
         {
             List<Product> products = new List<Product>();

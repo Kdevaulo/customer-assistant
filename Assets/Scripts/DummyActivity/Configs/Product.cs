@@ -39,5 +39,20 @@ namespace DummyActivity.Configs
         public bool Delivery => _delivery;
         public List<StringBoolModel> Size => _size;
         public ClothesType Type => _type;
+
+        public string GetSizeString()
+        {
+            string productSize = null;
+
+            foreach(StringBoolModel size in _size)
+            {
+                if(size.Value == true)
+                {
+                    productSize += $" {size.Text}";
+                }
+            }
+
+            return productSize;
+        }
     }
 }

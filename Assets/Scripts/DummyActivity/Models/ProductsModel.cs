@@ -33,7 +33,7 @@ namespace DummyActivity.Models
         }
 
         public event Action ItemChanged;
-        public event Action<bool> InfoClick;
+        public event Action<bool> ItemSelected;
 
         public Sprite ItemImage => _itemImage;
 
@@ -82,7 +82,7 @@ namespace DummyActivity.Models
             if (ItemImage == null)
                 return;
 
-            InfoClick?.Invoke(clicked);
+            ItemSelected?.Invoke(clicked);
         }
 
         private void Initialize()
@@ -92,7 +92,6 @@ namespace DummyActivity.Models
             if (_filteredItems.Count == 0)
             {
                 SetEmptyItem();
-                Debug.LogWarning("Items doesn't match the filters, empty item was setted");
                 return;
             }
 
@@ -125,77 +124,69 @@ namespace DummyActivity.Models
                 return filteredItems = _products;
             }
 
-            StringFilter color = null;
-            ToggleFilter size = null;
-            StringFilter material = null;
-            BoolFilter sale = null;
-            StringFilter shop = null;
-            BoolFilter delivery = null;
-            IntRangeFilter price = null;
+            StringFilter color;
+            ToggleFilter size;
+            StringFilter material;
+            BoolFilter sale;
+            StringFilter shop;
+            BoolFilter delivery;
+            IntRangeFilter price;
 
-            bool colorMatch = false;
-            bool sizeMatch = false;
-            bool materialMatch = false;
-            bool saleMatch = false;
-            bool shopMatch = false;
-            bool deliveryMatch = false;
-            bool priceMatch = false;
+            bool colorMatch;
+            bool sizeMatch;
+            bool materialMatch;
+            bool saleMatch;
+            bool shopMatch;
+            bool deliveryMatch;
+            bool priceMatch;
 
             foreach (Product item in _products)
             {
                 foreach (IFilter filter in activeFilters)
                 {
-                    if (filter.Name == "Цвет")
+                    switch (filter.Name)
                     {
-                        color = (StringFilter)filter;
-                        colorMatch = color.Value == item.Color;
-                        filterValues.Add(colorMatch);
-                    }
-                    else if (filter.Name == "Размер")
-                    {
-                        size = (ToggleFilter)filter;
-                        sizeMatch = CheckSize(size.Value, item);
-                        filterValues.Add(sizeMatch);
-                    }
-                    else if (filter.Name == "Материал")
-                    {
-                        material = (StringFilter)filter;
-                        materialMatch = material.Value == item.Material;
-                        filterValues.Add(materialMatch);
-                    }
-                    else if (filter.Name == "Наличие скидки")
-                    {
-                        sale = (BoolFilter)filter;
-                        saleMatch = sale.Value == item.Sale;
-                        filterValues.Add(saleMatch);
-                    }
-                    else if (filter.Name == "Магазин")
-                    {
-                        shop = (StringFilter)filter;
-                        shopMatch = shop.Value == item.Shop.Name;
-                        filterValues.Add(shopMatch);
-                    }
-                    else if (filter.Name == "Возможность доставки")
-                    {
-                        delivery = (BoolFilter)filter;
-                        deliveryMatch = delivery.Value == item.Delivery;
-                        filterValues.Add(deliveryMatch);
-                    }
-                    else if (filter.Name == "Цена")
-                    {
-                        price = (IntRangeFilter)filter;
-                        priceMatch = item.Price >= price.Value.x && item.Price <= price.Value.y;
-                        filterValues.Add(priceMatch);
+                        case "Цвет":
+                            color = (StringFilter)filter;
+                            colorMatch = color.Value == item.Color;
+                            filterValues.Add(colorMatch);
+                            break;
+                        case "Размер":
+                            size = (ToggleFilter)filter;
+                            sizeMatch = CheckSize(size.Value, item);
+                            filterValues.Add(sizeMatch);
+                            break;
+                        case "Материал":
+                            material = (StringFilter)filter;
+                            materialMatch = material.Value == item.Material;
+                            filterValues.Add(materialMatch);
+                            break;
+                        case "Наличие скидки":
+                            sale = (BoolFilter)filter;
+                            saleMatch = sale.Value == item.Sale;
+                            filterValues.Add(saleMatch);
+                            break;
+                        case "Магазин":
+                            shop = (StringFilter)filter;
+                            shopMatch = shop.Value == item.Shop.Name;
+                            filterValues.Add(shopMatch);
+                            break;
+                        case "Возможность доставки":
+                            delivery = (BoolFilter)filter;
+                            deliveryMatch = delivery.Value == item.Delivery;
+                            filterValues.Add(deliveryMatch);
+                            break;
+                        case "Цена":
+                            price = (IntRangeFilter)filter;
+                            priceMatch = item.Price >= price.Value.x && item.Price <= price.Value.y;
+                            filterValues.Add(priceMatch);
+                            break;
                     }
                 }
 
-                if (!filteredItems.Contains(item) && filterValues.All(v => v == true))
+                if (!filteredItems.Contains(item) && filterValues.All(v => v))
                 {
                     filteredItems.Add(item);
-                }
-                else
-                {
-                    Debug.LogWarning($"Item: {item.Name} – doesn't match the filters");
                 }
 
                 filterValues.Clear();
@@ -220,7 +211,7 @@ namespace DummyActivity.Models
                 }
             }
 
-            bool sizeCheckResult = sizeValues.Any(v => v == true);
+            bool sizeCheckResult = sizeValues.Any(v => v);
 
             return sizeCheckResult;
         }

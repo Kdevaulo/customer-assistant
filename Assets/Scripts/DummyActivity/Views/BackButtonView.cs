@@ -8,12 +8,7 @@ namespace DummyActivity.Views
     {
         [SerializeField] private GameObject _menu;
 
-        private Button _backButton;
-
-        private void Awake()
-        {
-            _backButton = GetComponent<Button>();
-        }
+        [SerializeField] private Button _backButton;
 
         private void OnEnable()
         {

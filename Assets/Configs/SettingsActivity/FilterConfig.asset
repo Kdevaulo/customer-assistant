@@ -25,13 +25,13 @@ MonoBehaviour:
     - _text: XS
       _value: 1
     - _text: S
-      _value: 0
+      _value: 1
     - _text: M
-      _value: 0
+      _value: 1
     - _text: L
-      _value: 0
+      _value: 1
     - _text: XL
-      _value: 0
+      _value: 1
     _toggleFilterPrefab: {fileID: 2797334778999114886, guid: 4663b5868486fa448bbf07705b66630e,
       type: 3}
   _material:
