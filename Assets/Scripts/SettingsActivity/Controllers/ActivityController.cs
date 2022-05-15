@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Cysharp.Threading.Tasks;
+
 using SettingsActivity.Configs;
 using SettingsActivity.Filters;
 using SettingsActivity.Models;
@@ -9,6 +11,7 @@ using SettingsActivity.Views;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 using Object = UnityEngine.Object;
@@ -238,8 +241,12 @@ namespace SettingsActivity.Controllers
 
         private void HandleBackButtonClick()
         {
-            // todo: to dummy's activity
-            Debug.Log("BackButton pressed");
+            ChangeSceneAsync().Forget();
+        }
+
+        private async UniTaskVoid ChangeSceneAsync()
+        {
+            await SceneManager.LoadSceneAsync("Scenes/Dummy_demo");
         }
 
         private void ChangeContainerHeight(float height, bool increase)

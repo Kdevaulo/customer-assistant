@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using SettingsActivity.Configs;
+using Cysharp.Threading.Tasks;
 
 using DummyActivity.Configs;
 using DummyActivity.Models;
 using DummyActivity.Views;
+
+using SettingsActivity.Configs;
+
+using UnityEngine.SceneManagement;
 
 namespace DummyActivity.Controllers
 {
@@ -40,6 +44,9 @@ namespace DummyActivity.Controllers
             _view.PreviousClick -= OnViewPreviousClick;
             _view.InfoClick -= OnViewClick;
             _view.DescriptionPanel.OpenDescription -= OnOpenDescription;
+
+            _mainView.MapButtonClicked -= HandleMapButtonClick;
+            _mainView.SettingsButtonClicked -= HandleSettingsButtonClick;
         }
 
         private void Initialize()
@@ -53,7 +60,6 @@ namespace DummyActivity.Controllers
                 Product.ClothesType clothesType = _products[0].Type;
 
                 FiltersNotMatch(clothesType);
-
             }
             else
             {
@@ -68,6 +74,29 @@ namespace DummyActivity.Controllers
             _view.PreviousClick += OnViewPreviousClick;
             _view.InfoClick += OnViewClick;
             _view.DescriptionPanel.OpenDescription += OnOpenDescription;
+
+            _mainView.MapButtonClicked += HandleMapButtonClick;
+            _mainView.SettingsButtonClicked += HandleSettingsButtonClick;
+        }
+
+        private void HandleMapButtonClick()
+        {
+            LoadMapSceneAsync().Forget();
+        }
+
+        private void HandleSettingsButtonClick()
+        {
+            LoadSettingsSceneAsync().Forget();
+        }
+
+        private async UniTaskVoid LoadMapSceneAsync()
+        {
+            await SceneManager.LoadSceneAsync("Scenes/Map");
+        }
+
+        private async UniTaskVoid LoadSettingsSceneAsync()
+        {
+            await SceneManager.LoadSceneAsync("Scenes/SettingsActivity");
         }
 
         private void FiltersNotMatch(Product.ClothesType clothesType)
