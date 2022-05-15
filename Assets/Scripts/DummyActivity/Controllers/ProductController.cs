@@ -25,7 +25,8 @@ namespace DummyActivity.Controllers
 
         private FilterConfig _filterConfig;
 
-        public ProductController(ProductView view, DummyMainView mainView, List<Product> products, FilterConfig filterConfig)
+        public ProductController(ProductView view, DummyMainView mainView, List<Product> products,
+            FilterConfig filterConfig)
         {
             _view = view;
             _mainView = mainView;

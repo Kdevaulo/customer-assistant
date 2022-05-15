@@ -1,4 +1,6 @@
-﻿using Mapbox.Examples;
+﻿using System;
+
+using Mapbox.Examples;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
 
@@ -8,8 +10,12 @@ namespace CustomerAssistant.MapKit
 {
     public class MarkerCreator : MonoBehaviour
     {
+        public event Action<Vector2d> Created = delegate { };
+
+        public Vector3 Radius => _currentMarker.Radius;
+
         [SerializeField]
-        private GameObject _markerPrefab;
+        private MarkerView _markerPrefab;
 
         [SerializeField]
         private float _scale = 100;
@@ -20,7 +26,7 @@ namespace CustomerAssistant.MapKit
         [SerializeField]
         private QuadTreeCameraMovement _cameraMover;
 
-        private GameObject _currentMarker;
+        private MarkerView _currentMarker;
 
         private Vector2d _geoPosition;
 
@@ -46,7 +52,7 @@ namespace CustomerAssistant.MapKit
         private void Create(Vector2d latlong)
         {
             if (_currentMarker != null)
-                Destroy(_currentMarker);
+                Destroy(_currentMarker.gameObject);
 
             _geoPosition = latlong;
 
@@ -54,6 +60,8 @@ namespace CustomerAssistant.MapKit
 
             _currentMarker.transform.localPosition = _map.GeoToWorldPosition(_geoPosition);
             _currentMarker.transform.localScale = new Vector3(_scale, _scale, _scale);
+
+            Created.Invoke(_geoPosition);
         }
 
         private void Update()

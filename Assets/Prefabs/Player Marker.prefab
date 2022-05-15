@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4936519322476758}
   - component: {fileID: 114584515627220354}
+  - component: {fileID: 506125517248108995}
   m_Layer: 10
   m_Name: Player Marker
   m_TagString: Untagged
@@ -46,6 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
+--- !u!114 &506125517248108995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839187062704024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef3436b6b78c465a8d97b07f3a07da4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radiusPoint: {fileID: 2513086306519015443}
 --- !u!1 &222633379851104422
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +71,6 @@ GameObject:
   - component: {fileID: 7488201816773883585}
   - component: {fileID: 8863256947719437498}
   - component: {fileID: 1673388897922394089}
-  - component: {fileID: 2027887838}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -484,21 +497,6 @@ PolygonCollider2D:
       - {x: 0.24, y: -4.79}
       - {x: -0.24, y: -4.79}
       - {x: -0.25, y: -4.7799997}
---- !u!114 &2027887838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222633379851104422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c7f97592f548868be448bfcc9362cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 7488201816773883585}
-  _zoomOutMin: 0.4
-  _zoomOutMax: 1.5
 --- !u!1 &659040945792895274
 GameObject:
   m_ObjectHideFlags: 0
