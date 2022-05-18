@@ -14,17 +14,15 @@ namespace CustomerAssistant.MapKit
 
         public Vector3 Radius => _currentMarker.Radius;
 
-        [SerializeField]
-        private MarkerView _markerPrefab;
+        [SerializeField] private RingSliderView _ringSliderView;
 
-        [SerializeField]
-        private float _scale = 100;
+        [SerializeField] private MarkerView _markerPrefab;
 
-        [SerializeField]
-        private AbstractMap _map;
+        [SerializeField] private float _scale = 50;
 
-        [SerializeField]
-        private QuadTreeCameraMovement _cameraMover;
+        [SerializeField] private AbstractMap _map;
+
+        [SerializeField] private QuadTreeCameraMovement _cameraMover;
 
         private MarkerView _currentMarker;
 
@@ -61,6 +59,13 @@ namespace CustomerAssistant.MapKit
             _currentMarker.transform.localPosition = _map.GeoToWorldPosition(_geoPosition);
             _currentMarker.transform.localScale = new Vector3(_scale, _scale, _scale);
 
+            var axisValue = ConvertSliderValue(_ringSliderView.SliderValue);
+
+            _currentMarker.RingTransform.localScale = new Vector2(axisValue, axisValue);
+
+            _ringSliderView.SliderValueChanged -= HandleSliderValueChange;
+            _ringSliderView.SliderValueChanged += HandleSliderValueChange;
+
             Created.Invoke(_geoPosition);
         }
 
@@ -71,6 +76,21 @@ namespace CustomerAssistant.MapKit
 
             _currentMarker.transform.localPosition = _map.GeoToWorldPosition(_geoPosition);
             _currentMarker.transform.localScale = new Vector3(_scale, _scale, _scale);
+        }
+
+        private void HandleSliderValueChange(float value)
+        {
+            var axisValue = ConvertSliderValue(value);
+
+            _currentMarker.RingTransform.localScale =
+                _markerPrefab.RingTransform.localScale = new Vector2(axisValue, axisValue);
+
+            Created.Invoke(_geoPosition);
+        }
+
+        private float ConvertSliderValue(float value)
+        {
+            return (value + 1) * 0.1f;
         }
     }
 }

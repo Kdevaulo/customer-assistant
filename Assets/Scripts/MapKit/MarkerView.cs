@@ -6,12 +6,8 @@ namespace CustomerAssistant.MapKit
     {
         public Vector3 Radius => _radiusPoint.position;
 
-        [SerializeField]
-        private Transform _radiusPoint;
+        [SerializeField] private Transform _radiusPoint;
 
-        /*private void Start()
-        {
-            Radius = Vector3.Distance(transform.position, _radiusPoint.position);
-        }*/
+        public Transform RingTransform;
     }
 }
