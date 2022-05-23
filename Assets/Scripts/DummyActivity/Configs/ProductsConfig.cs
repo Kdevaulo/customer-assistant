@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 
+using Mapbox.Json;
+
 using UnityEngine;
+
+using CustomerAssistant.MapKit;
 
 namespace DummyActivity.Configs
 {
@@ -13,15 +17,22 @@ namespace DummyActivity.Configs
         {
             List<Product> products = new List<Product>();
 
+            string json = PlayerPrefs.GetString("Shops");
+
+            ShopJson shops = JsonConvert.DeserializeObject<ShopJson>(json);
+
             foreach (Product product in _products)
             {
-                if (product.Type == type)
+                foreach (string shop in shops.Shops)
                 {
-                    products.Add(product);
+                    if (product.Type == type && product.Shop.Name == shop)
+                    {
+                        products.Add(product);
+                    }
                 }
             }
 
-            return products;
+            return products.Count == 0 ? null : products;
         }
     }
 }
