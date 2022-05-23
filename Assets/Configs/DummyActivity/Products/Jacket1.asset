@@ -18,8 +18,8 @@ MonoBehaviour:
   _shop:
     _name: Zolla
     _address: 
-    _URL: 
-  _color: black
+    _URL: https://zolla.com/
+  _color: "\u0447\u0435\u0440\u043D\u044B\u0439"
   _material: "\u041A\u0430\u043D\u0432\u0430\u0441"
   _sale: 0
   _delivery: 0
