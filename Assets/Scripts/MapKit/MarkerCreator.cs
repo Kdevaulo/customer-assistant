@@ -28,6 +28,8 @@ namespace CustomerAssistant.MapKit
 
         private Vector2d _geoPosition;
 
+        private float _searchRadiusMapCoefficient;
+
         private void OnValidate()
         {
             if (_map == null)
@@ -40,11 +42,21 @@ namespace CustomerAssistant.MapKit
         private void OnEnable()
         {
             _cameraMover.Clicked += Create;
+            _map.OnUpdated += HandleMapScaleUpdate;
         }
 
         private void OnDisable()
         {
             _cameraMover.Clicked -= Create;
+        }
+
+        private void HandleMapScaleUpdate()
+        {
+            var axisValue = (_map.Zoom - _searchRadiusMapCoefficient); // Todo: поправить коэффициент как-то
+            
+            _currentMarker.RingTransform.localScale = new Vector2(axisValue, axisValue);
+            
+            Debug.Log(_currentMarker.RingTransform.localScale);
         }
 
         private void Create(Vector2d latlong)
@@ -60,6 +72,8 @@ namespace CustomerAssistant.MapKit
             _currentMarker.transform.localScale = new Vector3(_scale, _scale, _scale);
 
             var axisValue = ConvertSliderValue(_ringSliderView.SliderValue);
+
+            _searchRadiusMapCoefficient = _map.Zoom - axisValue;
 
             _currentMarker.RingTransform.localScale = new Vector2(axisValue, axisValue);
 
@@ -84,7 +98,7 @@ namespace CustomerAssistant.MapKit
 
             var radius = new Vector2(axisValue, axisValue);
             _currentMarker.RingTransform.localScale = _markerPrefab.RingTransform.localScale = radius;
-            
+
             Created.Invoke(_geoPosition);
         }
 
