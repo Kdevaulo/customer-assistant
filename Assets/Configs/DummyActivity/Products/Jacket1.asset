@@ -16,9 +16,10 @@ MonoBehaviour:
   _image: {fileID: 21300000, guid: 8c042c3e95ca52849ac68e253fe242ad, type: 3}
   _price: 1200
   _shop:
-    _name: "\u041C\u0430\u0433\u0430\u0437\u0438\u043D1"
+    _name: Zolla
     _address: 
-  _color: black
+    _URL: https://zolla.com/
+  _color: "\u0447\u0435\u0440\u043D\u044B\u0439"
   _material: "\u041A\u0430\u043D\u0432\u0430\u0441"
   _sale: 0
   _delivery: 0

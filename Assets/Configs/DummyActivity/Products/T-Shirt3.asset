@@ -16,9 +16,10 @@ MonoBehaviour:
   _image: {fileID: 21300000, guid: 197ddbd679172da45b5b24ba72098ef0, type: 3}
   _price: 4200
   _shop:
-    _name: "\u0421\u0442\u0438\u043B\u044C"
+    _name: Emotion
     _address: 
-  _color: grey
+    _URL: 
+  _color: "\u0441\u0435\u0440\u044B\u0439"
   _material: "\u042D\u043B\u0430\u0441\u0442\u0430\u043D"
   _sale: 0
   _delivery: 1

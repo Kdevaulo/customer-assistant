@@ -28,6 +28,9 @@ namespace DummyActivity.Controllers
         public ProductController(ProductView view, DummyMainView mainView, List<Product> products,
             FilterConfig filterConfig)
         {
+            if (products == null)
+                return;
+
             _view = view;
             _mainView = mainView;
             _products = products;
