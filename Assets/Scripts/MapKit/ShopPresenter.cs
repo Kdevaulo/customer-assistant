@@ -73,15 +73,15 @@ namespace CustomerAssistant.MapKit
         {
             var list = new List<string>();
 
-            var radius = _map.WorldToGeoPosition(_markerCreator.Radius);
+            var pointPosition = _map.GeoToWorldPosition(latlong);
 
-            var r = Vector2d.Distance(latlong, radius);
+            var pointAndRadiusPointDistance = Vector3.Distance(pointPosition, _markerCreator.RadiusPointPosition);
 
             for (int i = 0; i < _shopData.Length; i++)
             {
-                var distanceToShop = Vector2d.Distance(latlong, _locations[i]);
+                var distanceToShop = Vector3.Distance(pointPosition, _map.GeoToWorldPosition(_locations[i]));
 
-                if (distanceToShop < r)
+                if (distanceToShop < pointAndRadiusPointDistance)
                 {
                     list.Add(_shopData[i].name);
                 }

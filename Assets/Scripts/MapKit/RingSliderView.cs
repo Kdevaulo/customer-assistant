@@ -18,6 +18,11 @@ namespace CustomerAssistant.MapKit
             _slider.onValueChanged.AddListener(HandleSliderValueChange);
         }
 
+        private void OnDestroy()
+        {
+            _slider.onValueChanged.RemoveListener(HandleSliderValueChange);
+        }
+
         private void HandleSliderValueChange(float value)
         {
             SliderValueChanged.Invoke(value);

@@ -12,7 +12,7 @@ namespace CustomerAssistant.MapKit
     {
         public event Action<Vector2d> Created = delegate { };
 
-        public Vector3 Radius => _currentMarker.Radius;
+        public Vector3 RadiusPointPosition => _currentMarker.RadiusPointPosition;
 
         [SerializeField] private RingSliderView _ringSliderView;
 
@@ -82,9 +82,9 @@ namespace CustomerAssistant.MapKit
         {
             var axisValue = ConvertSliderValue(value);
 
-            _currentMarker.RingTransform.localScale =
-                _markerPrefab.RingTransform.localScale = new Vector2(axisValue, axisValue);
-
+            var radius = new Vector2(axisValue, axisValue);
+            _currentMarker.RingTransform.localScale = _markerPrefab.RingTransform.localScale = radius;
+            
             Created.Invoke(_geoPosition);
         }
 
