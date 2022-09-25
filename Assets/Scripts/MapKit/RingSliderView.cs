@@ -12,7 +12,22 @@ namespace CustomerAssistant.MapKit
         public event Action<float> SliderValueChanged = delegate { };
 
         public float SliderValue => _slider.value;
-        
+
+        public void SetValueWithoutNotify(float value)
+        {
+            if (value > _slider.maxValue)
+            {
+                value = _slider.maxValue;
+            }
+
+            if (value < _slider.minValue)
+            {
+                value = _slider.minValue;
+            }
+
+            _slider.SetValueWithoutNotify(value);
+        }
+
         private void Awake()
         {
             _slider.onValueChanged.AddListener(HandleSliderValueChange);

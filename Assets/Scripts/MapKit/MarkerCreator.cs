@@ -24,11 +24,13 @@ namespace CustomerAssistant.MapKit
 
         [SerializeField] private QuadTreeCameraMovement _cameraMover;
 
+        private const float MapScaleCoefficient = 0.01f;
+
         private MarkerView _currentMarker;
 
         private Vector2d _geoPosition;
 
-        private float _searchRadiusMapCoefficient;
+        private Vector2d _cachedRingPointPosition;
 
         private void OnValidate()
         {
@@ -48,15 +50,23 @@ namespace CustomerAssistant.MapKit
         private void OnDisable()
         {
             _cameraMover.Clicked -= Create;
+            _map.OnUpdated -= HandleMapScaleUpdate;
         }
 
         private void HandleMapScaleUpdate()
         {
-            var axisValue = (_map.Zoom - _searchRadiusMapCoefficient); // Todo: поправить коэффициент как-то
-            
-            _currentMarker.RingTransform.localScale = new Vector2(axisValue, axisValue);
-            
-            Debug.Log(_currentMarker.RingTransform.localScale);
+            if (_currentMarker)
+            {
+                var pointPosition = _map.GeoToWorldPosition(_cachedRingPointPosition);
+
+                var distance = Vector3.Distance(_currentMarker.transform.localPosition, pointPosition) *
+                               MapScaleCoefficient;
+
+                _currentMarker.RingTransform.localScale =
+                    _markerPrefab.RingTransform.localScale = new Vector2(distance, distance);
+
+                SetSliderValue(distance);
+            }
         }
 
         private void Create(Vector2d latlong)
@@ -73,12 +83,12 @@ namespace CustomerAssistant.MapKit
 
             var axisValue = ConvertSliderValue(_ringSliderView.SliderValue);
 
-            _searchRadiusMapCoefficient = _map.Zoom - axisValue;
-
             _currentMarker.RingTransform.localScale = new Vector2(axisValue, axisValue);
 
             _ringSliderView.SliderValueChanged -= HandleSliderValueChange;
             _ringSliderView.SliderValueChanged += HandleSliderValueChange;
+
+            CacheRingPoint();
 
             Created.Invoke(_geoPosition);
         }
@@ -99,12 +109,24 @@ namespace CustomerAssistant.MapKit
             var radius = new Vector2(axisValue, axisValue);
             _currentMarker.RingTransform.localScale = _markerPrefab.RingTransform.localScale = radius;
 
+            CacheRingPoint();
+
             Created.Invoke(_geoPosition);
+        }
+
+        private void CacheRingPoint()
+        {
+            _cachedRingPointPosition = _map.WorldToGeoPosition(RadiusPointPosition);
         }
 
         private float ConvertSliderValue(float value)
         {
             return (value + 1) * 0.1f;
+        }
+
+        private void SetSliderValue(float value)
+        {
+            _ringSliderView.SetValueWithoutNotify(value * 10 - 1);
         }
     }
 }
