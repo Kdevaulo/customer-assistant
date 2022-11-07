@@ -21,10 +21,13 @@ namespace SettingsActivity.Controllers
     public class ActivityController : IDisposable
     {
         private readonly ButtonView _backButtonView;
+
         private readonly FiltersContainerView _filtersContainerView;
+
         private readonly FilterConfig _filterConfig;
 
         private FiltersModel _filtersModel;
+
         private RectTransform _containerTransform;
 
         private List<ViewFilterTransformModel> _filtersData = new List<ViewFilterTransformModel>(8);
@@ -55,6 +58,8 @@ namespace SettingsActivity.Controllers
 
             var inactiveFilters = _filtersModel.GetInactiveFilters();
 
+            AddDropOption("None"); // note: add first "none" option to fix selection bug
+
             foreach (var item in inactiveFilters)
             {
                 AddDropOption(item.Name);
@@ -64,7 +69,8 @@ namespace SettingsActivity.Controllers
 
             _containerTransform = _filtersContainerView.FiltersContainer.GetComponent<RectTransform>();
 
-            Assert.IsNotNull(_containerTransform, "FiltersContainerView -> FiltersContainer does not contain RectTransform");
+            Assert.IsNotNull(_containerTransform,
+                "FiltersContainerView -> FiltersContainer does not contain RectTransform");
 
             foreach (var item in filters)
             {
@@ -77,7 +83,8 @@ namespace SettingsActivity.Controllers
 
                         Assert.IsNotNull(boolFilter);
 
-                        var boolFilterView = Object.Instantiate(boolFilter.BoolFilterPrefab, _filtersContainerView.FiltersContainer);
+                        var boolFilterView = Object.Instantiate(boolFilter.BoolFilterPrefab,
+                            _filtersContainerView.FiltersContainer);
 
                         SetText(boolFilterView, boolFilter.Name);
                         filterView = boolFilterView;
@@ -92,12 +99,14 @@ namespace SettingsActivity.Controllers
 
                         Assert.IsNotNull(stringFilter);
 
-                        var stringFilterView = Object.Instantiate(stringFilter.StringFilterPrefab, _filtersContainerView.FiltersContainer);
+                        var stringFilterView = Object.Instantiate(stringFilter.StringFilterPrefab,
+                            _filtersContainerView.FiltersContainer);
 
                         SetText(stringFilterView, stringFilter.Name);
                         filterView = stringFilterView;
 
-                        stringFilterView.InputField.onValueChanged.AddListener(x => ChangeFilterValue(item as StringFilter, x));
+                        stringFilterView.InputField.onValueChanged.AddListener(x =>
+                            ChangeFilterValue(item as StringFilter, x));
                         stringFilterView.InputField.text = stringFilter.Value;
 
                         break;
@@ -107,7 +116,8 @@ namespace SettingsActivity.Controllers
 
                         Assert.IsNotNull(toggleFilter);
 
-                        var toggleFilterView = Object.Instantiate(toggleFilter.ToggleFilterPrefab, _filtersContainerView.FiltersContainer);
+                        var toggleFilterView = Object.Instantiate(toggleFilter.ToggleFilterPrefab,
+                            _filtersContainerView.FiltersContainer);
 
                         SetText(toggleFilterView, toggleFilter.Name);
                         filterView = toggleFilterView;
@@ -129,7 +139,8 @@ namespace SettingsActivity.Controllers
                         Assert.IsNotNull(intRangeFilter);
 
                         var intRangeFilterView =
-                            Object.Instantiate(intRangeFilter.IntRangeFilterPrefab, _filtersContainerView.FiltersContainer);
+                            Object.Instantiate(intRangeFilter.IntRangeFilterPrefab,
+                                _filtersContainerView.FiltersContainer);
 
                         SetText(intRangeFilterView, intRangeFilter.Name);
                         filterView = intRangeFilterView;
@@ -141,10 +152,12 @@ namespace SettingsActivity.Controllers
                         intRangeFilterView.MaxInputField.text = intRangeFilter.Value.y.ToString();
 
                         minInputField.onValueChanged.AddListener(x =>
-                            ChangeFilterValue(item as IntRangeFilter, new Vector2Int(ParseToInt(x), intRangeFilter.Value.y)));
+                            ChangeFilterValue(item as IntRangeFilter,
+                                new Vector2Int(ParseToInt(x), intRangeFilter.Value.y)));
 
                         maxInputField.onValueChanged.AddListener(y =>
-                            ChangeFilterValue(item as IntRangeFilter, new Vector2Int(intRangeFilter.Value.x, ParseToInt(y))));
+                            ChangeFilterValue(item as IntRangeFilter,
+                                new Vector2Int(intRangeFilter.Value.x, ParseToInt(y))));
 
                         break;
                 }
@@ -184,9 +197,16 @@ namespace SettingsActivity.Controllers
 
         private void HandleFilterAddition(int value)
         {
+            if (value == 0) // note: if "None"
+            {
+                return;
+            }
+
             var chosenFilter = _filtersContainerView.Dropdown.options[value];
 
             RemoveDropOption(chosenFilter);
+
+            _filtersContainerView.Dropdown.SetValueWithoutNotify(0); // note: select "None" option
 
             var item = _filtersData.First(x => x.Filter.Name == chosenFilter.text);
 
