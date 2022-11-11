@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using CustomerAssistant.DatabaseLoadSystem;
+
+using Cysharp.Threading.Tasks;
+
 using Mapbox.Json;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
@@ -12,28 +16,63 @@ namespace CustomerAssistant.MapKit
 {
     public class ShopPresenter : MonoBehaviour
     {
-        [SerializeField]
-        private MarkerCreator _markerCreator;
+        [SerializeField] private MarkerCreator _markerCreator;
 
-        [SerializeField]
-        private AbstractMap _map;
+        [SerializeField] private AbstractMap _map;
 
-        [SerializeField]
-        private GameObject _markerPrefab;
+        [SerializeField] private GameObject _markerPrefab;
 
-        [SerializeField]
+        [SerializeField] private float _spawnScale = 50f;
+
         private ShopData[] _shopData;
-
-        [SerializeField]
-        private float _spawnScale = 50f;
 
         private Vector2d[] _locations;
 
         private List<Transform> _spawnedObjects;
 
+        private void OnEnable()
+        {
+            _markerCreator.Created += OnCreated;
+        }
+
+        private void OnDisable()
+        {
+            _markerCreator.Created -= OnCreated;
+        }
+
         private void Start()
         {
-            _locations = _shopData.Select(t => t.latLong).ToArray();
+            InitializeAsync().Forget();
+        }
+
+        private void Update()
+        {
+            for (int i = 0; i < _spawnedObjects.Count; i++)
+            {
+                var spawnedObject = _spawnedObjects[i];
+
+                spawnedObject.localPosition = _map.GeoToWorldPosition(_locations[i]);
+                spawnedObject.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
+            }
+        }
+
+        private async UniTask InitializeAsync()
+        {
+            await SetShopDataAsync();
+
+            InitializePoints();
+        }
+        
+        private async UniTask SetShopDataAsync()
+        {
+            await DataLoader.LoadShopDataAsync();
+
+            _shopData = DataLoader.GetShopData();
+        }
+
+        private void InitializePoints()
+        {
+            _locations = _shopData.Select(t => new Vector2d(t.Latitude, t.Longitude)).ToArray();
 
             _spawnedObjects = new List<Transform>();
 
@@ -48,30 +87,9 @@ namespace CustomerAssistant.MapKit
             }
         }
 
-        private void OnEnable()
-        {
-            _markerCreator.Created += OnCreated;
-        }
-
-        private void OnDisable()
-        {
-            _markerCreator.Created -= OnCreated;
-        }
-
-        private void Update()
-        {
-            for (int i = 0; i < _spawnedObjects.Count; i++)
-            {
-                var spawnedObject = _spawnedObjects[i];
-
-                spawnedObject.localPosition = _map.GeoToWorldPosition(_locations[i]);
-                spawnedObject.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
-            }
-        }
-
         private void OnCreated(Vector2d latlong)
         {
-            var list = new List<string>();
+            var list = new List<int>();
 
             var pointPosition = _map.GeoToWorldPosition(latlong);
 
@@ -83,7 +101,7 @@ namespace CustomerAssistant.MapKit
 
                 if (distanceToShop < pointAndRadiusPointDistance)
                 {
-                    list.Add(_shopData[i].name);
+                    list.Add(_shopData[i].ID);
                 }
             }
 
@@ -99,9 +117,9 @@ namespace CustomerAssistant.MapKit
     [Serializable]
     public class ShopJson
     {
-        public List<string> Shops { get; set; }
+        public List<int> Shops { get; set; }
 
-        public string this[int index]
+        public int this[int index]
         {
             get => Shops[index];
             set => Shops[index] = value;

@@ -3,13 +3,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-using DummyActivity.Configs;
-
 namespace DummyActivity.Views
 {
     public class ProductView : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer[] _itemObjects;
+        private SpriteRenderer[] _itemObjects;
 
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _previousButton;
@@ -30,6 +28,8 @@ namespace DummyActivity.Views
 
         private void OnEnable()
         {
+            // todo: создавать гейм-объекты со спрайт-рендерами с одеждой тут, добавлять их в список _itemObjects
+            
             try
             {
                 Validate();
@@ -60,7 +60,7 @@ namespace DummyActivity.Views
 
         public void SetDescriptionText(Product item)
         {
-            _itemDescriptionText.text = $"{item.Name}\n{item.Shop.Name}\n{item.Price}";
+            _itemDescriptionText.text = $"{item.Name}\n{item.Shop_Name}\n{item.Price}";
         }
 
         public void EnableItemObject(Sprite image)

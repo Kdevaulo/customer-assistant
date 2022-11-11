@@ -1,26 +1,28 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-
-using UnityEngine;
-
-using DummyActivity.Configs;
+using System.Linq;
 
 using SettingsActivity;
 using SettingsActivity.Configs;
 using SettingsActivity.Filters;
 using SettingsActivity.Models;
 
+using UnityEngine;
+
 namespace DummyActivity.Models
 {
     public class ProductsModel
     {
         private List<Product> _products = new List<Product>();
+
         private int _itemIndex;
+
         private Sprite _itemImage;
 
         private FilterConfig _filterConfig;
+
         private List<IFilter> _filters = new List<IFilter>();
+
         private List<Product> _filteredItems = new List<Product>();
 
         public ProductsModel(List<Product> products, FilterConfig filterConfig)
@@ -45,7 +47,7 @@ namespace DummyActivity.Models
             if (_itemIndex < _filteredItems.Count - 1)
             {
                 _itemIndex += 1;
-                _itemImage = _filteredItems[_itemIndex].Image;
+                _itemImage = _filteredItems[_itemIndex].Sprite;
                 ItemChanged?.Invoke();
             }
         }
@@ -59,7 +61,7 @@ namespace DummyActivity.Models
 
             if (_itemIndex > -1)
             {
-                _itemImage = _filteredItems[_itemIndex].Image;
+                _itemImage = _filteredItems[_itemIndex].Sprite;
             }
             else if (_itemIndex <= -1)
             {
@@ -96,7 +98,7 @@ namespace DummyActivity.Models
             }
 
             _itemIndex = 0;
-            _itemImage = _filteredItems[_itemIndex].Image;
+            _itemImage = _filteredItems[_itemIndex].Sprite;
         }
 
         private void ApplyFilters()
@@ -147,37 +149,37 @@ namespace DummyActivity.Models
                     switch (filter.Name)
                     {
                         case "Цвет":
-                            color = (StringFilter)filter;
+                            color = (StringFilter) filter;
                             colorMatch = color.Value == item.Color;
                             filterValues.Add(colorMatch);
                             break;
                         case "Размер":
-                            size = (ToggleFilter)filter;
+                            size = (ToggleFilter) filter;
                             sizeMatch = CheckSize(size.Value, item);
                             filterValues.Add(sizeMatch);
                             break;
                         case "Материал":
-                            material = (StringFilter)filter;
+                            material = (StringFilter) filter;
                             materialMatch = material.Value == item.Material;
                             filterValues.Add(materialMatch);
                             break;
                         case "Наличие скидки":
-                            sale = (BoolFilter)filter;
+                            sale = (BoolFilter) filter;
                             saleMatch = sale.Value == item.Sale;
                             filterValues.Add(saleMatch);
                             break;
                         case "Магазин":
-                            shop = (StringFilter)filter;
-                            shopMatch = shop.Value == item.Shop.Name;
+                            shop = (StringFilter) filter;
+                            shopMatch = shop.Value == item.Shop_Name;
                             filterValues.Add(shopMatch);
                             break;
                         case "Возможность доставки":
-                            delivery = (BoolFilter)filter;
+                            delivery = (BoolFilter) filter;
                             deliveryMatch = delivery.Value == item.Delivery;
                             filterValues.Add(deliveryMatch);
                             break;
                         case "Цена":
-                            price = (IntRangeFilter)filter;
+                            price = (IntRangeFilter) filter;
                             priceMatch = item.Price >= price.Value.x && item.Price <= price.Value.y;
                             filterValues.Add(priceMatch);
                             break;
@@ -197,14 +199,22 @@ namespace DummyActivity.Models
 
         private bool CheckSize(List<StringBoolModel> sizeFilter, Product item)
         {
-            List<StringBoolModel> itemSize = item.Size;
+            var itemSizes = new List<StringBoolModel>();
+
+            var sizes = item.Size.Split(',');
+
+            foreach (var size in sizes)
+            {
+                itemSizes.Add(new StringBoolModel(size, true));
+            }
+
             List<bool> sizeValues = new List<bool>();
 
             bool correctSize = false;
 
             foreach (StringBoolModel filterSize in sizeFilter)
             {
-                foreach (StringBoolModel size in itemSize)
+                foreach (StringBoolModel size in itemSizes)
                 {
                     correctSize = filterSize.Value == true && size.Value == true && filterSize.Text == size.Text;
                     sizeValues.Add(correctSize);

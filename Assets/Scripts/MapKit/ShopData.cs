@@ -7,8 +7,16 @@ namespace CustomerAssistant.MapKit
     [Serializable]
     public struct ShopData
     {
-        public Vector2d latLong;
+        public int ID;
 
-        public string name;
+        public double Latitude;
+
+        public double Longitude;
+
+        public string Shop_Name;
+
+        public string Site;
+
+        public string Address;
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System;
 
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-
 using TMPro;
 
-using DummyActivity.Configs;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace DummyActivity.Views
 {
@@ -41,14 +39,9 @@ namespace DummyActivity.Views
             _nameText.text = $"<align=center><color=#F7FCFB><size=130%>{item.Name}\n";
             _nameText.text += $"<align=center><size=100%><color=#7C8483>Цена: {item.Price}\n";
 
-            if (item.Shop.GetShopURLString() != null)
-            {
-                _descriptionText.LinkText.text = $"<align=left><color=#F7FCFB><size=120%>Производитель: {item.Shop.GetShopURLString()}\n";
-            }
-            else
-            {
-                _descriptionText.LinkText.text = $"<align=left><color=#F7FCFB><size=120%>Производитель: {item.Shop.Name}\n";
-            }
+            var urlString = GetShopURLString(item.Site, item.Shop_Name) ?? item.Shop_Name;
+
+            _descriptionText.LinkText.text = $"<align=left><color=#F7FCFB><size=120%>Производитель: {urlString}\n";
 
             string delivery = item.Delivery ? "Возможна доставка" : "Нет доставки";
 
@@ -56,8 +49,18 @@ namespace DummyActivity.Views
 
             _descriptionText.LinkText.text += $"<color=#F7FCFB><size=120%>Описание\n";
 
-            _descriptionText.LinkText.text += $"<color=#7C8483><size=100%>Размер модели: {item.GetSizeString()}\n";
+            _descriptionText.LinkText.text += $"<color=#7C8483><size=100%>Размер модели: {item.Size}\n";
             _descriptionText.LinkText.text += $"<color=#7C8483><size=100%>Цвет: {item.Color}\n";
+        }
+
+        private string GetShopURLString(string site, string name)
+        {
+            if (!string.IsNullOrEmpty(site))
+            {
+                return string.Format("<#7f7fe5><u><link=\"{0}\">{1}</link></u></color>", site, name);
+            }
+
+            return null;
         }
     }
 }

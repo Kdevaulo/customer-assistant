@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using Cysharp.Threading.Tasks;
 
-using DummyActivity.Configs;
 using DummyActivity.Models;
 using DummyActivity.Views;
 
@@ -61,7 +60,7 @@ namespace DummyActivity.Controllers
             {
                 _view.ButtonImage.gameObject.SetActive(false);
 
-                Product.ClothesType clothesType = _products[0].Type;
+                Clothes clothesType = _products[0].Type;
 
                 FiltersNotMatch(clothesType);
             }
@@ -103,17 +102,17 @@ namespace DummyActivity.Controllers
             await SceneManager.LoadSceneAsync("Scenes/SettingsActivity");
         }
 
-        private void FiltersNotMatch(Product.ClothesType clothesType)
+        private void FiltersNotMatch(Clothes clothesType)
         {
             switch (clothesType)
             {
-                case Product.ClothesType.PANTS:
+                case Clothes.PANTS:
                     _mainView.ShowMessage($"Товары в категории брюки не найдены\n");
                     break;
-                case Product.ClothesType.SHIRTS:
+                case Clothes.SHIRTS:
                     _mainView.ShowMessage($"Товары в категории верх не найдены\n");
                     break;
-                case Product.ClothesType.T_SHIRTS:
+                case Clothes.T_SHIRTS:
                     _mainView.ShowMessage($"Товары в категории топы не найдены\n");
                     break;
             }

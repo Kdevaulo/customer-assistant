@@ -283,47 +283,6 @@ MonoBehaviour:
   _map: {fileID: 555018383}
   _markerPrefab: {fileID: 1839187062704024, guid: 56b41ea6cf9c5dc4a946a98eb02a7e32,
     type: 3}
-  _shopData:
-  - latLong:
-      x: 58.01099
-      y: 56.23601
-    name: Zolla
-  - latLong:
-      x: 58.01154
-      y: 56.24459
-    name: Emporio Armani
-  - latLong:
-      x: 58.01084
-      y: 56.24694
-    name: Arta
-  - latLong:
-      x: 58.0109
-      y: 56.24716
-    name: Emotion
-  - latLong:
-      x: 58.0103
-      y: 56.24988
-    name: Capitol
-  - latLong:
-      x: 58.00884
-      y: 56.25121
-    name: Molotov
-  - latLong:
-      x: 58.00826
-      y: 56.26143
-    name: LaRochelle
-  - latLong:
-      x: 58.0073
-      y: 56.25822
-    name: Paola
-  - latLong:
-      x: 58.00671
-      y: 56.25977
-    name: X-Meji
-  - latLong:
-      x: 58.01198
-      y: 56.25735
-    name: Avigdor
   _spawnScale: 50
 --- !u!4 &384850467
 Transform:
@@ -333,7 +292,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384850465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2092183, y: -0.808983, z: -25.837734}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
