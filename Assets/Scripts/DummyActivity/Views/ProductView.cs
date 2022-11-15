@@ -1,44 +1,46 @@
 ﻿using System;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace DummyActivity.Views
 {
     public class ProductView : MonoBehaviour
     {
-        private SpriteRenderer[] _itemObjects;
-
-        [SerializeField] private Button _nextButton;
-        [SerializeField] private Button _previousButton;
-
-        [SerializeField] private Image _buttonImage;
-        [SerializeField] private Text _itemDescriptionText;
-        [SerializeField] private Toggle _infoToggle;
-
-        [SerializeField] private ProductDetailedDescriptionView _descriptionPanel;
-
         public event Action NextClick;
         public event Action PreviousClick;
         public event Action<bool> InfoClick;
 
         public ProductDetailedDescriptionView DescriptionPanel => _descriptionPanel;
         public Toggle InfoToggle => _infoToggle;
+
         public Image ButtonImage => _buttonImage;
+
+        public Transform ObjectsParent => _objectsParent;
+        public int RendererSortingOrder => _rendererSortingOrder;
+
+        [SerializeField] private Button _nextButton;
+
+        [SerializeField] private Button _previousButton;
+
+        [SerializeField] private Image _buttonImage;
+
+        [SerializeField] private Text _itemDescriptionText;
+
+        [SerializeField] private Toggle _infoToggle;
+
+        [SerializeField] private ProductDetailedDescriptionView _descriptionPanel;
+
+        [SerializeField] private Transform _objectsParent;
+
+        [SerializeField] private int _rendererSortingOrder;
+
+        private SpriteRenderer[] _itemObjects;
 
         private void OnEnable()
         {
-            // todo: создавать гейм-объекты со спрайт-рендерами с одеждой тут, добавлять их в список _itemObjects
-            
-            try
-            {
-                Validate();
-            }
-            catch (Exception e)
-            {
-                enabled = false;
-                throw e;
-            }
+            _buttonImage.alphaHitTestMinimumThreshold = 0.1f;
 
             _nextButton.onClick.AddListener(OnNextClick);
             _previousButton.onClick.AddListener(OnPreviousClick);
@@ -50,6 +52,11 @@ namespace DummyActivity.Views
             _nextButton?.onClick.RemoveListener(OnNextClick);
             _previousButton?.onClick.RemoveListener(OnPreviousClick);
             _infoToggle.onValueChanged.RemoveListener(OnInfoClick);
+        }
+
+        public void SetItemObjects(SpriteRenderer[] renderers)
+        {
+            _itemObjects = renderers;
         }
 
         public void SetButtonShape(Sprite image)
@@ -65,6 +72,8 @@ namespace DummyActivity.Views
 
         public void EnableItemObject(Sprite image)
         {
+            Assert.IsNotNull(_itemObjects);
+
             for (int i = 0; i < _itemObjects.Length; i++)
             {
                 if (_itemObjects[i].sprite == image)
@@ -76,14 +85,6 @@ namespace DummyActivity.Views
                     _itemObjects[i].gameObject.SetActive(false);
                 }
             }
-        }
-
-        private void Validate()
-        {
-            if (_itemObjects == null)
-                throw new InvalidOperationException();
-
-            _buttonImage.alphaHitTestMinimumThreshold = 0.1f;
         }
 
         private void OnNextClick()

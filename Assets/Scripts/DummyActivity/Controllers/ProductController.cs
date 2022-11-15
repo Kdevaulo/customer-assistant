@@ -8,7 +8,11 @@ using DummyActivity.Views;
 
 using SettingsActivity.Configs;
 
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+using Object = UnityEngine.Object;
 
 namespace DummyActivity.Controllers
 {
@@ -35,7 +39,7 @@ namespace DummyActivity.Controllers
             _products = products;
             _filterConfig = filterConfig;
 
-            Initialize();
+            GenerateItems().Forget();
         }
 
         void IDisposable.Dispose()
@@ -52,15 +56,43 @@ namespace DummyActivity.Controllers
             _mainView.SettingsButtonClicked -= HandleSettingsButtonClick;
         }
 
+        private async UniTask GenerateItems()
+        {
+            var parent = _view.ObjectsParent;
+
+            var sortingOrder = _view.RendererSortingOrder;
+
+            var renderersCollection = new List<SpriteRenderer>();
+
+            foreach (var product in _products) // todo: heavy operation, need to rework and distribute
+            {
+                var gameObject = new GameObject(product.Name);
+                gameObject.transform.SetParent(parent);
+                gameObject.transform.localPosition = Vector3.zero;
+                gameObject.transform.localScale = Vector3.one;
+                gameObject.SetActive(false);
+
+                var renderer = gameObject.AddComponent<SpriteRenderer>();
+                renderer.sprite = product.Sprite;
+                renderer.color = Color.white;
+                renderer.sortingOrder = sortingOrder;
+
+                renderersCollection.Add(renderer);
+            }
+
+            _view.SetItemObjects(renderersCollection.ToArray());
+
+            Initialize();
+        }
+
         private void Initialize()
         {
             _model = new ProductsModel(_products, _filterConfig);
 
             if (_model.ItemImage == null)
             {
-                _view.ButtonImage.gameObject.SetActive(false);
-
                 Clothes clothesType = _products[0].Type;
+                _view.ButtonImage.gameObject.SetActive(false);
 
                 FiltersNotMatch(clothesType);
             }

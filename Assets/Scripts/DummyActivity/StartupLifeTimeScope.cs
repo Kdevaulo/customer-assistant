@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using CustomerAssistant.DatabaseLoadSystem;
 using CustomerAssistant.MapKit;
@@ -49,14 +50,21 @@ namespace DummyActivity
             ShopJson shopJson = JsonConvert.DeserializeObject<ShopJson>(json);
 
             var products = new List<Product>();
+            var stringBuilder = new StringBuilder();
 
-            foreach (var shopID in shopJson.Shops)
+            for (var i = 0; i < shopJson.Shops.Count; i++)
             {
-                await DataLoader.LoadItemsByShopIDAsync(shopID);
+                stringBuilder.Append(shopJson.Shops[i]);
 
-                products.AddRange(DataLoader.GetProducts());
+                if (i != shopJson.Shops.Count - 1)
+                {
+                    stringBuilder.Append(",");
+                }
             }
 
+            await DataLoader.LoadItemsByShopIDAsync(stringBuilder.ToString());
+
+            products.AddRange(DataLoader.GetProducts());
             _pantsController = new ProductController(_pantsView, _mainView,
                 GetProductsOfType(Clothes.PANTS, products), _filterConfig);
 
