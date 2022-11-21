@@ -22,6 +22,8 @@ namespace DummyActivity
     [AddComponentMenu(nameof(StartupLifeTimeScope) + " in Dummy")]
     public class StartupLifeTimeScope : MonoBehaviour
     {
+        [SerializeField] private GameObject _loadingScreen;
+
         [SerializeField] FilterConfig _filterConfig;
 
         [SerializeField] ProductView _pantsView;
@@ -73,6 +75,8 @@ namespace DummyActivity
 
             _tShirtsController = new ProductController(_tShirtView, _mainView,
                 GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig);
+
+            _loadingScreen.SetActive(false);
         }
 
         private List<Product> GetProductsOfType(Clothes type, List<Product> products)

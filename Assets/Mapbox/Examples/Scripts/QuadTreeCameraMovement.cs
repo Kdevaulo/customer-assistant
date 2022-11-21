@@ -205,7 +205,6 @@ namespace Mapbox.Examples
 
                 if (raycastResults.Any(x => x.gameObject.GetComponent<Button>()))
                 {
-                    Debug.Log("Raycast button intersect");
                     return; // note: we are not going to set point in Button area
                 }
 
