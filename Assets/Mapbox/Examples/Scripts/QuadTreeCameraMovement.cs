@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Schema;
 
 using Mapbox.Unity.Map;
 using Mapbox.Unity.Utilities;
@@ -6,6 +9,7 @@ using Mapbox.Utils;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Mapbox.Examples
 {
@@ -30,11 +34,17 @@ namespace Mapbox.Examples
         bool _useDegreeMethod;
 
         private Vector3 _origin;
+
         private Vector3 _mousePosition;
+
         private Vector3 _mousePositionPrevious;
+
         private bool _shouldDrag;
+
         private bool _isInitialized = false;
+
         private Plane _groundPlane = new Plane(Vector3.up, 0);
+
         private bool _dragStartedOnUI = false;
 
         void Awake()
@@ -64,7 +74,6 @@ namespace Mapbox.Examples
             }
         }
 
-
         private void LateUpdate()
         {
             if (!_isInitialized)
@@ -92,13 +101,11 @@ namespace Mapbox.Examples
             scrollDelta = Input.GetAxis("Mouse ScrollWheel");
             ZoomMapUsingTouchOrMouse(scrollDelta);
 
-
             //pan keyboard
             float xMove = Input.GetAxis("Horizontal");
             float zMove = Input.GetAxis("Vertical");
 
             PanMapUsingKeyBoard(xMove, zMove);
-
 
             //pan mouse
             PanMapUsingTouchOrMouse();
@@ -186,9 +193,23 @@ namespace Mapbox.Examples
             if (Input.GetMouseButtonDown(0))
             {
                 var mousePosScreen = Input.mousePosition;
-                mousePosScreen.z = _referenceCamera.transform.localPosition.y;
-                var pos = _referenceCamera.ScreenToWorldPoint(mousePosScreen);
 
+                mousePosScreen.z = _referenceCamera.transform.localPosition.y;
+
+                var eventData = new PointerEventData(EventSystem.current);
+                eventData.position = mousePosScreen;
+
+                var raycastResults = new List<RaycastResult>();
+
+                EventSystem.current.RaycastAll(eventData, raycastResults);
+
+                if (raycastResults.Any(x => x.gameObject.GetComponent<Button>()))
+                {
+                    Debug.Log("Raycast button intersect");
+                    return; // note: we are not going to set point in Button area
+                }
+
+                var pos = _referenceCamera.ScreenToWorldPoint(mousePosScreen);
                 _mouseDownPosition = _mapManager.WorldToGeoPosition(pos);
             }
 
@@ -205,7 +226,7 @@ namespace Mapbox.Examples
                 if (latlongDelta.Equals(_mouseDownPosition))
                 {
                     Clicked.Invoke(latlongDelta);
-                    // Debug.Log("Latitude: " + latlongDelta.x + " Longitude: " + latlongDelta.y);
+                    //Debug.Log("Latitude: " + latlongDelta.x + " Longitude: " + latlongDelta.y);
                 }
             }
 
@@ -304,8 +325,10 @@ namespace Mapbox.Examples
                             // to get degrees represented by each pixel.
                             // Mouse offset is in pixels, therefore multiply the factor with the offset to move the center.
                             float factor = _panSpeed *
-                                Conversions.GetTileScaleInDegrees((float) _mapManager.CenterLatitudeLongitude.x,
-                                    _mapManager.AbsoluteZoom) / _mapManager.UnityTileSize;
+                                           Conversions.GetTileScaleInDegrees(
+                                               (float) _mapManager.CenterLatitudeLongitude.x,
+                                               _mapManager.AbsoluteZoom) /
+                                           _mapManager.UnityTileSize;
 
                             var latitudeLongitude =
                                 new Vector2d(_mapManager.CenterLatitudeLongitude.x + offset.z * factor,
