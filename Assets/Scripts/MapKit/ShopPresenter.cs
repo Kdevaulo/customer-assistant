@@ -47,6 +47,11 @@ namespace CustomerAssistant.MapKit
 
         private void Update()
         {
+            if (_spawnedObjects == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < _spawnedObjects.Count; i++)
             {
                 var spawnedObject = _spawnedObjects[i];
@@ -62,7 +67,7 @@ namespace CustomerAssistant.MapKit
 
             InitializePoints();
         }
-        
+
         private async UniTask SetShopDataAsync()
         {
             await DataLoader.LoadShopDataAsync();
