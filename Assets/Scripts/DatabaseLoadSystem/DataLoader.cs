@@ -6,7 +6,10 @@ using DummyActivity;
 
 using Mapbox.Json;
 
+using UnityEditor;
+
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Networking;
 
 namespace CustomerAssistant.DatabaseLoadSystem
@@ -74,11 +77,11 @@ namespace CustomerAssistant.DatabaseLoadSystem
             foreach (var product in Products)
             {
                 byte[] imageBytes = System.Convert.FromBase64String(product.Image);
-                Texture2D tex = new Texture2D(1, 1);
+                Texture2D tex = new Texture2D(1, 1, GraphicsFormat.R8_UNorm, TextureCreationFlags.None);
                 tex.LoadImage(imageBytes);
 
                 Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height),
-                    new Vector2(0.5f, 0f));
+                    new Vector2(0.5f, 0f), 100, 1, SpriteMeshType.FullRect);
 
                 product.Sprite = sprite;
             }
