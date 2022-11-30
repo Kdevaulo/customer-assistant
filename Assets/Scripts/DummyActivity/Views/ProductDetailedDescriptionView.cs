@@ -39,7 +39,8 @@ namespace DummyActivity.Views
             _nameText.text = $"<align=center><color=#F7FCFB><size=130%>{item.Name}\n";
             _nameText.text += $"<align=center><size=100%><color=#7C8483>Цена: {item.Price}\n";
 
-            var urlString = GetShopURLString(item.Site, item.Shop_Name) ?? item.Shop_Name;
+            var urlString = GetShopURLString(item.Site, item.Shop_Name) ??
+                            item.Shop_Name + "\n" + $"<color=#4d66cc><size=75%>{item.Address}";
 
             _descriptionText.LinkText.text = $"<align=left><color=#F7FCFB><size=120%>Производитель: {urlString}\n";
 
