@@ -1,5 +1,7 @@
 ﻿using System;
 
+using CustomerAssistant.DummyActivity;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;

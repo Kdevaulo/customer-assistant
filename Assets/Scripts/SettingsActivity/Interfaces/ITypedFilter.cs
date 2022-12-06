@@ -1,4 +1,4 @@
-namespace SettingsActivity
+namespace CustomerAssistant.SettingsActivity
 {
     public interface ITypedFilter<T> : IFilter
     {

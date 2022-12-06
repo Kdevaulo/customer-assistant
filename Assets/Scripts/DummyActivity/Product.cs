@@ -1,10 +1,8 @@
 ﻿using System;
 
-using CustomerAssistant.MapKit;
-
 using UnityEngine;
 
-namespace DummyActivity
+namespace CustomerAssistant.DummyActivity
 {
     [Serializable]
     public class Product

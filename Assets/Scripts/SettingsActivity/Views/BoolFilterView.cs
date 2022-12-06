@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SettingsActivity.Views
+namespace CustomerAssistant.SettingsActivity.Views
 {
     [AddComponentMenu(nameof(BoolFilterView) + " in SettingsActivity")]
     public class BoolFilterView : FilterView

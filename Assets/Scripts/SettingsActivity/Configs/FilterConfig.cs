@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-using SettingsActivity.Filters;
+using CustomerAssistant.SettingsActivity.Filters;
 
 using UnityEngine;
 
-namespace SettingsActivity.Configs
+namespace CustomerAssistant.SettingsActivity.Configs
 {
     [CreateAssetMenu(fileName = nameof(FilterConfig), menuName = "SettingsActivity/Configs/" + nameof(FilterConfig))]
     public class FilterConfig : ScriptableObject

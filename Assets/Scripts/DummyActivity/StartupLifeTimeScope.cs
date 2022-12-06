@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 using CustomerAssistant.DatabaseLoadSystem;
+using CustomerAssistant.DummyActivity.Controllers;
 using CustomerAssistant.MapKit;
+using CustomerAssistant.SettingsActivity.Configs;
 
 using Cysharp.Threading.Tasks;
 
-using DummyActivity.Controllers;
 using DummyActivity.Views;
 
 using Mapbox.Json;
 
-using SettingsActivity.Configs;
-
 using UnityEngine;
 
-namespace DummyActivity
+namespace CustomerAssistant.DummyActivity
 {
     [AddComponentMenu(nameof(StartupLifeTimeScope) + " in Dummy")]
     public class StartupLifeTimeScope : MonoBehaviour

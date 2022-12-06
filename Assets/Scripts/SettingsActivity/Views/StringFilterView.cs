@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SettingsActivity.Views
+namespace CustomerAssistant.SettingsActivity.Views
 {
     [AddComponentMenu(nameof(StringFilterView) + " in SettingsActivity")]
     public class StringFilterView : FilterView

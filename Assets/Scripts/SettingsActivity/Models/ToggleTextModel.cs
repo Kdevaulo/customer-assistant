@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SettingsActivity.Models
+namespace CustomerAssistant.SettingsActivity.Models
 {
     [Serializable]
     public class ToggleTextModel

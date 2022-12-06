@@ -1,12 +1,11 @@
+using System;
+
+using CustomerAssistant.DummyActivity;
 using CustomerAssistant.MapKit;
 
 using Cysharp.Threading.Tasks;
 
-using DummyActivity;
-
 using Mapbox.Json;
-
-using UnityEditor;
 
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -76,7 +75,7 @@ namespace CustomerAssistant.DatabaseLoadSystem
 
             foreach (var product in Products)
             {
-                byte[] imageBytes = System.Convert.FromBase64String(product.Image);
+                byte[] imageBytes = Convert.FromBase64String(product.Image);
                 Texture2D tex = new Texture2D(1, 1, GraphicsFormat.R8_UNorm, TextureCreationFlags.None);
                 tex.LoadImage(imageBytes);
 

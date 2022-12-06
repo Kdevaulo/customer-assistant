@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Cysharp.Threading.Tasks;
+using CustomerAssistant.SettingsActivity.Configs;
+using CustomerAssistant.SettingsActivity.Filters;
+using CustomerAssistant.SettingsActivity.Models;
+using CustomerAssistant.SettingsActivity.Views;
 
-using SettingsActivity.Configs;
-using SettingsActivity.Filters;
-using SettingsActivity.Models;
-using SettingsActivity.Views;
+using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,7 +16,7 @@ using UnityEngine.UI;
 
 using Object = UnityEngine.Object;
 
-namespace SettingsActivity.Controllers
+namespace CustomerAssistant.SettingsActivity.Controllers
 {
     public class ActivityController : IDisposable
     {

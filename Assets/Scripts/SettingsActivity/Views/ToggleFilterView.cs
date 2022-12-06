@@ -1,8 +1,8 @@
-using SettingsActivity.Models;
+using CustomerAssistant.SettingsActivity.Models;
 
 using UnityEngine;
 
-namespace SettingsActivity.Views
+namespace CustomerAssistant.SettingsActivity.Views
 {
     [AddComponentMenu(nameof(ToggleFilterView) + " in SettingsActivity")]
     public class ToggleFilterView : FilterView

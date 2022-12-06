@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using SettingsActivity.Models;
-using SettingsActivity.Views;
+using CustomerAssistant.SettingsActivity.Models;
+using CustomerAssistant.SettingsActivity.Views;
 
 using UnityEngine;
 
-namespace SettingsActivity.Filters
+namespace CustomerAssistant.SettingsActivity.Filters
 {
     [Serializable]
     public class ToggleFilter : ITypedFilter<StringBoolModel>

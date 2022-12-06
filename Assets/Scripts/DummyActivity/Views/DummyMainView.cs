@@ -15,6 +15,7 @@ namespace DummyActivity.Views
         public event Action SettingsButtonClicked = delegate { };
 
         public event Action MapButtonClicked = delegate { };
+        public event Action FavoritesButtonClicked = delegate { };
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
         {
@@ -45,6 +46,11 @@ namespace DummyActivity.Views
         public void HandleMapButtonClick()
         {
             MapButtonClicked.Invoke();
+        }
+
+        public void HandleFavoritesButtonClick()
+        {
+            FavoritesButtonClicked.Invoke();
         }
     }
 }

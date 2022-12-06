@@ -1,8 +1,8 @@
-using SettingsActivity.Views;
+using CustomerAssistant.SettingsActivity.Views;
 
 using UnityEngine;
 
-namespace SettingsActivity.Models
+namespace CustomerAssistant.SettingsActivity.Models
 {
     public struct ViewFilterTransformModel
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SettingsActivity.Models
+namespace CustomerAssistant.SettingsActivity.Models
 {
     public class FiltersModel
     {

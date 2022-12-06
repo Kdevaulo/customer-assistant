@@ -1,4 +1,4 @@
-namespace DummyActivity
+namespace CustomerAssistant.DummyActivity
 {
     public enum Clothes
     {

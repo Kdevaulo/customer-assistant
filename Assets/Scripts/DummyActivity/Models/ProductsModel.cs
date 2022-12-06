@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using SettingsActivity;
-using SettingsActivity.Configs;
-using SettingsActivity.Filters;
-using SettingsActivity.Models;
+using CustomerAssistant.SettingsActivity;
+using CustomerAssistant.SettingsActivity.Configs;
+using CustomerAssistant.SettingsActivity.Filters;
+using CustomerAssistant.SettingsActivity.Models;
 
 using UnityEngine;
 
-namespace DummyActivity.Models
+namespace CustomerAssistant.DummyActivity.Models
 {
     public class ProductsModel
     {

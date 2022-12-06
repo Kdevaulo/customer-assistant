@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-namespace SettingsActivity.Models
+namespace CustomerAssistant.SettingsActivity.Models
 {
     [Serializable]
     public class StringBoolModel

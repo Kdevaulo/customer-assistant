@@ -1,17 +1,11 @@
-using System;
+using CustomerAssistant;
 
 using UnityEngine;
 
-namespace SettingsActivity.Views
+namespace CustomerAssistant.SettingsActivity.Views
 {
     [AddComponentMenu(nameof(ButtonView) + " in SettingsActivity")]
-    public class ButtonView : MonoBehaviour
+    public class ButtonView : CustomButtonView
     {
-        public event Action ButtonClicked = delegate { };
-
-        public void HandleButtonClick()
-        {
-            ButtonClicked.Invoke();
-        }
     }
 }

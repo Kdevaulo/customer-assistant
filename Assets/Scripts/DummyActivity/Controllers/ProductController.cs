@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using CustomerAssistant.DummyActivity.Models;
+using CustomerAssistant.SettingsActivity.Configs;
+
 using Cysharp.Threading.Tasks;
 
-using DummyActivity.Models;
 using DummyActivity.Views;
-
-using SettingsActivity.Configs;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-using Object = UnityEngine.Object;
-
-namespace DummyActivity.Controllers
+namespace CustomerAssistant.DummyActivity.Controllers
 {
     public class ProductController : IDisposable
     {
@@ -112,6 +109,7 @@ namespace DummyActivity.Controllers
 
             _mainView.MapButtonClicked += HandleMapButtonClick;
             _mainView.SettingsButtonClicked += HandleSettingsButtonClick;
+            _mainView.FavoritesButtonClicked += HandleFavoritesButtonClick;
         }
 
         private void HandleMapButtonClick()
@@ -124,6 +122,11 @@ namespace DummyActivity.Controllers
             LoadSettingsSceneAsync().Forget();
         }
 
+        private void HandleFavoritesButtonClick()
+        {
+            LoadFavoritesSceneAsync().Forget();
+        }
+
         private async UniTaskVoid LoadMapSceneAsync()
         {
             await SceneManager.LoadSceneAsync("Scenes/Map");
@@ -132,6 +135,11 @@ namespace DummyActivity.Controllers
         private async UniTaskVoid LoadSettingsSceneAsync()
         {
             await SceneManager.LoadSceneAsync("Scenes/SettingsActivity");
+        }
+        
+        private async UniTaskVoid LoadFavoritesSceneAsync()
+        {
+            await SceneManager.LoadSceneAsync("Scenes/FavoritesActivity");
         }
 
         private void FiltersNotMatch(Clothes clothesType)

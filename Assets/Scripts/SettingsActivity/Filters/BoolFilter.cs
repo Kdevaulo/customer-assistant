@@ -1,10 +1,10 @@
 using System;
 
-using SettingsActivity.Views;
+using CustomerAssistant.SettingsActivity.Views;
 
 using UnityEngine;
 
-namespace SettingsActivity.Filters
+namespace CustomerAssistant.SettingsActivity.Filters
 {
     [Serializable]
     public class BoolFilter : ITypedFilter<bool>

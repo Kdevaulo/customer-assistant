@@ -1,10 +1,10 @@
-﻿using SettingsActivity.Configs;
-using SettingsActivity.Controllers;
-using SettingsActivity.Views;
+﻿using CustomerAssistant.SettingsActivity.Configs;
+using CustomerAssistant.SettingsActivity.Controllers;
+using CustomerAssistant.SettingsActivity.Views;
 
 using UnityEngine;
 
-namespace SettingsActivity
+namespace CustomerAssistant.SettingsActivity
 {
     [AddComponentMenu(nameof(StartupLifeTimeScope) + " in SettingsActivity")]
     public class StartupLifeTimeScope : MonoBehaviour

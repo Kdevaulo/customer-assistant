@@ -1,5 +1,7 @@
 ﻿using System;
 
+using CustomerAssistant.DummyActivity;
+
 using TMPro;
 
 using UnityEngine;
