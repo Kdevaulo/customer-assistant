@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textField: {fileID: 7582783632260437987}
-  _removeButton: {fileID: 2209305157756944332}
+  _removeBackButton: {fileID: 2209305157756944332}
   _minInputField: {fileID: 7582783633066857294}
   _maxInputField: {fileID: 6874551501028234562}
 --- !u!1 &7582783632260437989
