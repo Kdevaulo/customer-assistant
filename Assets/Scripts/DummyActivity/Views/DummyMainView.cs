@@ -13,9 +13,9 @@ namespace DummyActivity.Views
         [SerializeField] private Text _message;
 
         public event Action SettingsButtonClicked = delegate { };
-
         public event Action MapButtonClicked = delegate { };
         public event Action FavoritesButtonClicked = delegate { };
+        public event Action AddToFavoriteButtonClicked = delegate { };
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
         {
@@ -51,6 +51,11 @@ namespace DummyActivity.Views
         public void HandleFavoritesButtonClick()
         {
             FavoritesButtonClicked.Invoke();
+        }
+
+        public void HandleAddToFavoriteButtonClick()
+        {
+            AddToFavoriteButtonClicked.Invoke();
         }
     }
 }

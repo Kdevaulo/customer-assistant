@@ -11,13 +11,13 @@ namespace CustomerAssistant.SettingsActivity
     {
         [SerializeField] private FilterConfig _filterConfig;
         
-        [SerializeField] private ButtonView _buttonView;
+        [SerializeField] private BackButtonView _backButtonView;
         
         [SerializeField] private FiltersContainerView _filtersContainerView;
 
         private void Start()
         {
-            _ = new ActivityController(_buttonView, _filtersContainerView, _filterConfig);
+            _ = new ActivityController(_backButtonView, _filtersContainerView, _filterConfig);
         }
     }
 }

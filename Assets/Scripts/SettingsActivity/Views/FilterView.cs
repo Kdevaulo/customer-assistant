@@ -8,10 +8,10 @@ namespace CustomerAssistant.SettingsActivity.Views
     {
         [SerializeField] private Text _textField;
 
-        [SerializeField] private ButtonView _removeButton;
+        [SerializeField] private BackButtonView _removeBackButton;
 
         public Text TextField => _textField;
 
-        public ButtonView RemoveButton => _removeButton;
+        public BackButtonView RemoveBackButton => _removeBackButton;
     }
 }

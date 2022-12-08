@@ -4,6 +4,7 @@ using System.Text;
 
 using CustomerAssistant.DatabaseLoadSystem;
 using CustomerAssistant.DummyActivity.Controllers;
+using CustomerAssistant.DummyActivity.Models;
 using CustomerAssistant.MapKit;
 using CustomerAssistant.SettingsActivity.Configs;
 
@@ -38,6 +39,10 @@ namespace CustomerAssistant.DummyActivity
 
         private ProductController _tShirtsController;
 
+        private ActivityController _activityController;
+
+        private FavoritesModel _favoritesModel;
+
         private void Start()
         {
             InitializeAsync().Forget();
@@ -65,15 +70,20 @@ namespace CustomerAssistant.DummyActivity
             await DataLoader.LoadItemsByShopIDAsync(stringBuilder.ToString());
 
             products.AddRange(DataLoader.GetProducts());
+
+            _favoritesModel = new FavoritesModel();
+            
             _pantsController = new ProductController(_pantsView, _mainView,
-                GetProductsOfType(Clothes.PANTS, products), _filterConfig);
+                GetProductsOfType(Clothes.PANTS, products), _filterConfig, _favoritesModel);
 
             _shirtsController = new ProductController(_shirtsView, _mainView,
-                GetProductsOfType(Clothes.SHIRTS, products), _filterConfig);
+                GetProductsOfType(Clothes.SHIRTS, products), _filterConfig, _favoritesModel);
 
             _tShirtsController = new ProductController(_tShirtView, _mainView,
-                GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig);
+                GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig, _favoritesModel);
 
+            _activityController = new ActivityController(_mainView, _favoritesModel);
+            
             _loadingScreen.SetActive(false);
         }
 

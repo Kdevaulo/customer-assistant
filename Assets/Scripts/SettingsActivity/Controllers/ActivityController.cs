@@ -20,7 +20,7 @@ namespace CustomerAssistant.SettingsActivity.Controllers
 {
     public class ActivityController : IDisposable
     {
-        private readonly ButtonView _backButtonView;
+        private readonly BackButtonView _backBackButtonView;
 
         private readonly FiltersContainerView _filtersContainerView;
 
@@ -32,10 +32,10 @@ namespace CustomerAssistant.SettingsActivity.Controllers
 
         private List<ViewFilterTransformModel> _filtersData = new List<ViewFilterTransformModel>(8);
 
-        public ActivityController(ButtonView backButtonView, FiltersContainerView filtersContainerView,
+        public ActivityController(BackButtonView backBackButtonView, FiltersContainerView filtersContainerView,
             FilterConfig filterConfig)
         {
-            _backButtonView = backButtonView;
+            _backBackButtonView = backBackButtonView;
             _filtersContainerView = filtersContainerView;
             _filterConfig = filterConfig;
 
@@ -44,7 +44,7 @@ namespace CustomerAssistant.SettingsActivity.Controllers
 
         void IDisposable.Dispose()
         {
-            _backButtonView.ButtonClicked -= HandleBackButtonClick;
+            _backBackButtonView.ButtonClicked -= HandleBackBackButtonClick;
             _filtersContainerView.Dropdown.onValueChanged.RemoveListener(HandleFilterAddition);
         }
 
@@ -164,7 +164,7 @@ namespace CustomerAssistant.SettingsActivity.Controllers
 
                 Assert.IsNotNull(filterView, "filterView == null");
 
-                filterView.RemoveButton.ButtonClicked += () => HandleFilterRemoving(filterView);
+                filterView.RemoveBackButton.ButtonClicked += () => HandleFilterRemoving(filterView);
 
                 var viewTransform = filterView.GetComponent<RectTransform>();
 
@@ -186,7 +186,7 @@ namespace CustomerAssistant.SettingsActivity.Controllers
 
             #endregion
 
-            _backButtonView.ButtonClicked += HandleBackButtonClick;
+            _backBackButtonView.ButtonClicked += HandleBackBackButtonClick;
             _filtersContainerView.Dropdown.onValueChanged.AddListener(HandleFilterAddition);
         }
 
@@ -259,7 +259,7 @@ namespace CustomerAssistant.SettingsActivity.Controllers
             filter.ChangeValue(value);
         }
 
-        private void HandleBackButtonClick()
+        private void HandleBackBackButtonClick()
         {
             ChangeSceneAsync().Forget();
         }

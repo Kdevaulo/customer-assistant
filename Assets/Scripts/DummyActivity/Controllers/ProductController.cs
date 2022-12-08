@@ -9,7 +9,6 @@ using Cysharp.Threading.Tasks;
 using DummyActivity.Views;
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace CustomerAssistant.DummyActivity.Controllers
 {
@@ -25,8 +24,10 @@ namespace CustomerAssistant.DummyActivity.Controllers
 
         private FilterConfig _filterConfig;
 
+        private readonly FavoritesModel _favoritesModel;
+
         public ProductController(ProductView view, DummyMainView mainView, List<Product> products,
-            FilterConfig filterConfig)
+            FilterConfig filterConfig, FavoritesModel favoritesModel)
         {
             if (products == null)
                 return;
@@ -35,8 +36,9 @@ namespace CustomerAssistant.DummyActivity.Controllers
             _mainView = mainView;
             _products = products;
             _filterConfig = filterConfig;
+            _favoritesModel = favoritesModel;
 
-            GenerateItems().Forget();
+            GenerateItems();
         }
 
         void IDisposable.Dispose()
@@ -48,12 +50,9 @@ namespace CustomerAssistant.DummyActivity.Controllers
             _view.PreviousClick -= OnViewPreviousClick;
             _view.InfoClick -= OnViewClick;
             _view.DescriptionPanel.OpenDescription -= OnOpenDescription;
-
-            _mainView.MapButtonClicked -= HandleMapButtonClick;
-            _mainView.SettingsButtonClicked -= HandleSettingsButtonClick;
         }
 
-        private async UniTask GenerateItems()
+        private void GenerateItems()
         {
             var parent = _view.ObjectsParent;
 
@@ -106,40 +105,6 @@ namespace CustomerAssistant.DummyActivity.Controllers
             _view.PreviousClick += OnViewPreviousClick;
             _view.InfoClick += OnViewClick;
             _view.DescriptionPanel.OpenDescription += OnOpenDescription;
-
-            _mainView.MapButtonClicked += HandleMapButtonClick;
-            _mainView.SettingsButtonClicked += HandleSettingsButtonClick;
-            _mainView.FavoritesButtonClicked += HandleFavoritesButtonClick;
-        }
-
-        private void HandleMapButtonClick()
-        {
-            LoadMapSceneAsync().Forget();
-        }
-
-        private void HandleSettingsButtonClick()
-        {
-            LoadSettingsSceneAsync().Forget();
-        }
-
-        private void HandleFavoritesButtonClick()
-        {
-            LoadFavoritesSceneAsync().Forget();
-        }
-
-        private async UniTaskVoid LoadMapSceneAsync()
-        {
-            await SceneManager.LoadSceneAsync("Scenes/Map");
-        }
-
-        private async UniTaskVoid LoadSettingsSceneAsync()
-        {
-            await SceneManager.LoadSceneAsync("Scenes/SettingsActivity");
-        }
-        
-        private async UniTaskVoid LoadFavoritesSceneAsync()
-        {
-            await SceneManager.LoadSceneAsync("Scenes/FavoritesActivity");
         }
 
         private void FiltersNotMatch(Clothes clothesType)
@@ -162,6 +127,7 @@ namespace CustomerAssistant.DummyActivity.Controllers
         {
             _view.DescriptionPanel.SetDescriptionText(_model.GetCurrentItem());
             _view.DescriptionPanel.SetIcon(_model.ItemImage);
+
             _mainView.CloseInfoPanels();
         }
 
@@ -195,13 +161,18 @@ namespace CustomerAssistant.DummyActivity.Controllers
                 return;
 
             _view.SetDescriptionText(selectedItem);
+
             _view.DescriptionPanel.gameObject.SetActive(clicked);
+
+            if (!clicked)
+            {
+                _favoritesModel.CacheFavoriteProduct(selectedItem);
+            }
         }
 
         private void OnViewClick(bool clicked)
         {
             _model.ShowInfo(clicked);
-            OnInfoClick(clicked);
         }
     }
 }

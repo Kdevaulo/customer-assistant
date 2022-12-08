@@ -25,7 +25,7 @@ namespace CustomerAssistant.DatabaseLoadSystem
 
             using (var webRequest = UnityWebRequest.Get("http://customer-assistant.site/getShops.php"))
             {
-                webRequest.SendWebRequest();
+                await webRequest.SendWebRequest();
 
                 await UniTask.WaitUntil(() => webRequest.isDone);
 
@@ -53,7 +53,7 @@ namespace CustomerAssistant.DatabaseLoadSystem
             using (UnityWebRequest webRequest =
                    UnityWebRequest.Post("http://customer-assistant.site/getProducts.php", form))
             {
-                webRequest.SendWebRequest();
+                await webRequest.SendWebRequest();
 
                 await UniTask.WaitUntil(() => webRequest.isDone);
 
@@ -75,14 +75,7 @@ namespace CustomerAssistant.DatabaseLoadSystem
 
             foreach (var product in Products)
             {
-                byte[] imageBytes = Convert.FromBase64String(product.Image);
-                Texture2D tex = new Texture2D(1, 1, GraphicsFormat.R8_UNorm, TextureCreationFlags.None);
-                tex.LoadImage(imageBytes);
-
-                Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height),
-                    new Vector2(0.5f, 0f), 100, 1, SpriteMeshType.FullRect);
-
-                product.Sprite = sprite;
+                product.Sprite = Utils.ConvertSprite(product.Image);
             }
         }
 
