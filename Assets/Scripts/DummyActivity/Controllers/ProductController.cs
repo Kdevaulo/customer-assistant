@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using CustomerAssistant.DummyActivity.Models;
 using CustomerAssistant.SettingsActivity.Configs;
 
-using Cysharp.Threading.Tasks;
-
 using DummyActivity.Views;
 
 using UnityEngine;
@@ -14,6 +12,8 @@ namespace CustomerAssistant.DummyActivity.Controllers
 {
     public class ProductController : IDisposable
     {
+        private readonly FavoritesModel _favoritesModel;
+
         private ProductView _view;
 
         private DummyMainView _mainView;
@@ -23,8 +23,6 @@ namespace CustomerAssistant.DummyActivity.Controllers
         private List<Product> _products;
 
         private FilterConfig _filterConfig;
-
-        private readonly FavoritesModel _favoritesModel;
 
         public ProductController(ProductView view, DummyMainView mainView, List<Product> products,
             FilterConfig filterConfig, FavoritesModel favoritesModel)

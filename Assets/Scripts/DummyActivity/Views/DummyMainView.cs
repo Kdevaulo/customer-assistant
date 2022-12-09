@@ -8,14 +8,14 @@ namespace DummyActivity.Views
 {
     public class DummyMainView : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private Toggle[] _infoToggles;
-
-        [SerializeField] private Text _message;
-
         public event Action SettingsButtonClicked = delegate { };
         public event Action MapButtonClicked = delegate { };
         public event Action FavoritesButtonClicked = delegate { };
         public event Action AddToFavoriteButtonClicked = delegate { };
+
+        [SerializeField] private Toggle[] _infoToggles;
+
+        [SerializeField] private Text _message;
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
         {

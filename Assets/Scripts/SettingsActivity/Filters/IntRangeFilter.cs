@@ -9,6 +9,14 @@ namespace CustomerAssistant.SettingsActivity.Filters
     [Serializable]
     public class IntRangeFilter : ITypedFilter<Vector2Int>
     {
+        public bool Active => _active;
+
+        public string Name => _name;
+
+        public Vector2Int Value => _value;
+
+        public IntRangeView IntRangeFilterPrefab => _intRangeFilterPrefab;
+
         [SerializeField] private string _name;
 
         [SerializeField] private bool _active;
@@ -26,13 +34,5 @@ namespace CustomerAssistant.SettingsActivity.Filters
         {
             _value = value;
         }
-
-        public bool Active => _active;
-
-        public string Name => _name;
-
-        public Vector2Int Value => _value;
-
-        public IntRangeView IntRangeFilterPrefab => _intRangeFilterPrefab;
     }
 }

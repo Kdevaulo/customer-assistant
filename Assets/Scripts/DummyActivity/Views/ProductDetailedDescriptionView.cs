@@ -12,6 +12,8 @@ namespace DummyActivity.Views
 {
     public class ProductDetailedDescriptionView : MonoBehaviour, IPointerClickHandler
     {
+        public event Action OpenDescription;
+
         [SerializeField] private Image _itemImage;
 
         [SerializeField] private GameObject _descriptionMenu;
@@ -19,8 +21,6 @@ namespace DummyActivity.Views
         [SerializeField] private TextMeshProUGUI _nameText;
 
         [SerializeField] private TextLinkView _descriptionText;
-
-        public event Action OpenDescription;
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
         {

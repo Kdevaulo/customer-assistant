@@ -1,7 +1,5 @@
 using System;
 
-using Mapbox.Utils;
-
 namespace CustomerAssistant.MapKit
 {
     [Serializable]

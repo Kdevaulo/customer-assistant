@@ -7,11 +7,11 @@ namespace CustomerAssistant.MapKit
 {
     public class RingSliderView : MonoBehaviour
     {
-        [SerializeField] private Slider _slider;
-
         public event Action<float> SliderValueChanged = delegate { };
 
         public float SliderValue => _slider.value;
+
+        [SerializeField] private Slider _slider;
 
         public void SetValueWithoutNotify(float value)
         {

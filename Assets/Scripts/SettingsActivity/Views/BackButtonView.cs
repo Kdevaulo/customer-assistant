@@ -1,5 +1,3 @@
-using CustomerAssistant;
-
 using UnityEngine;
 
 namespace CustomerAssistant.SettingsActivity.Views

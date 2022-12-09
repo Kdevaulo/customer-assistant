@@ -12,6 +12,14 @@ namespace CustomerAssistant.SettingsActivity.Filters
     [Serializable]
     public class ToggleFilter : ITypedFilter<StringBoolModel>
     {
+        public bool Active => _active;
+
+        public string Name => _name;
+
+        public List<StringBoolModel> Value => _value;
+
+        public ToggleFilterView ToggleFilterPrefab => _toggleFilterPrefab;
+
         [SerializeField] private string _name;
 
         [SerializeField] private bool _active;
@@ -31,13 +39,5 @@ namespace CustomerAssistant.SettingsActivity.Filters
 
             model.SetValue(item.Value);
         }
-
-        public bool Active => _active;
-
-        public string Name => _name;
-
-        public List<StringBoolModel> Value => _value;
-
-        public ToggleFilterView ToggleFilterPrefab => _toggleFilterPrefab;
     }
 }

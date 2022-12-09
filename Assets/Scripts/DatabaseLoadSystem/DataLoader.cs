@@ -1,5 +1,3 @@
-using System;
-
 using CustomerAssistant.DummyActivity;
 using CustomerAssistant.MapKit;
 
@@ -8,7 +6,6 @@ using Cysharp.Threading.Tasks;
 using Mapbox.Json;
 
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 using UnityEngine.Networking;
 
 namespace CustomerAssistant.DatabaseLoadSystem
@@ -67,7 +64,7 @@ namespace CustomerAssistant.DatabaseLoadSystem
                 }
             }
 
-            // todo: remove this shit after DB fix
+            // note: needs cz bool in database looks like [0,1](int)
             loadedString = loadedString.Replace("\"sale\":\"1\"", "\"sale\":\"true\"");
             loadedString = loadedString.Replace("\"sale\":\"0\"", "\"sale\":\"false\"");
 

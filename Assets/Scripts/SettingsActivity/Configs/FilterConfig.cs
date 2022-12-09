@@ -10,11 +10,17 @@ namespace CustomerAssistant.SettingsActivity.Configs
     public class FilterConfig : ScriptableObject
     {
         [SerializeField] private StringFilter _color;
+
         [SerializeField] private ToggleFilter _size;
+
         [SerializeField] private StringFilter _material;
+
         [SerializeField] private IntRangeFilter _price;
+
         [SerializeField] private BoolFilter _sale;
+
         [SerializeField] private StringFilter _shop;
+
         [SerializeField] private BoolFilter _delivery;
 
         public List<IFilter> GetFilters()

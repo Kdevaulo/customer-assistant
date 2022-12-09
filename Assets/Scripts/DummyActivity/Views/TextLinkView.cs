@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using TMPro;
 
-using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TextLinkView : MonoBehaviour, IPointerClickHandler
 {
@@ -9,7 +9,8 @@ public class TextLinkView : MonoBehaviour, IPointerClickHandler
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        int linkIndex = TMP_TextUtilities.FindIntersectingLink(_linkText, eventData.position, eventData.enterEventCamera);
+        int linkIndex =
+            TMP_TextUtilities.FindIntersectingLink(_linkText, eventData.position, eventData.enterEventCamera);
 
         if (linkIndex != -1)
         {

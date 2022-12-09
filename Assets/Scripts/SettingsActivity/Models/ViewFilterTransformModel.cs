@@ -6,6 +6,12 @@ namespace CustomerAssistant.SettingsActivity.Models
 {
     public struct ViewFilterTransformModel
     {
+        public FilterView View => _view;
+
+        public IFilter Filter => _filter;
+
+        public RectTransform RectTransform => _rectTransform;
+
         private FilterView _view;
 
         private IFilter _filter;
@@ -18,11 +24,5 @@ namespace CustomerAssistant.SettingsActivity.Models
             _filter = filter;
             _rectTransform = rectTransform;
         }
-
-        public FilterView View => _view;
-
-        public IFilter Filter => _filter;
-
-        public RectTransform RectTransform => _rectTransform;
     }
 }

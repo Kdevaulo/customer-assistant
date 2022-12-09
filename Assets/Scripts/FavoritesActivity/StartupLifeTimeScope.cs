@@ -2,7 +2,6 @@ using CustomerAssistant.FavoritesActivity.Controllers;
 using CustomerAssistant.FavoritesActivity.Views;
 
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace CustomerAssistant.FavoritesActivity
 {

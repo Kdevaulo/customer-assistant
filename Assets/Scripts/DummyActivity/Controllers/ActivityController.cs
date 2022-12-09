@@ -60,8 +60,6 @@ namespace CustomerAssistant.DummyActivity.Controllers
 
                 PlayerPrefs.SetString(prefsKey, serializedString);
 
-                Debug.Log($"todo: saved to \"{prefsKey}\"");
-
                 break;
             }
         }

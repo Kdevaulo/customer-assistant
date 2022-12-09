@@ -9,6 +9,14 @@ namespace CustomerAssistant.SettingsActivity.Filters
     [Serializable]
     public class BoolFilter : ITypedFilter<bool>
     {
+        public bool Active => _active;
+
+        public string Name => _name;
+
+        public bool Value => _value;
+
+        public BoolFilterView BoolFilterPrefab => _boolFilterPrefab;
+
         [SerializeField] private string _name;
 
         [SerializeField] private bool _active;
@@ -26,13 +34,5 @@ namespace CustomerAssistant.SettingsActivity.Filters
         {
             _value = value;
         }
-
-        public bool Active => _active;
-
-        public string Name => _name;
-
-        public bool Value => _value;
-
-        public BoolFilterView BoolFilterPrefab => _boolFilterPrefab;
     }
 }

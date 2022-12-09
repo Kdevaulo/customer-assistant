@@ -9,8 +9,7 @@ namespace CustomerAssistant.MapKit
 {
     public class FinishButtonView : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject _warningPanel;
+        [SerializeField] private GameObject _warningPanel;
 
         public void OnButtonClick()
         {

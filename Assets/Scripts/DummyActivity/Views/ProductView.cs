@@ -15,11 +15,13 @@ namespace DummyActivity.Views
         public event Action<bool> InfoClick;
 
         public ProductDetailedDescriptionView DescriptionPanel => _descriptionPanel;
+
         public Toggle InfoToggle => _infoToggle;
 
         public Image ButtonImage => _buttonImage;
 
         public Transform ObjectsParent => _objectsParent;
+
         public int RendererSortingOrder => _rendererSortingOrder;
 
         [SerializeField] private Button _nextButton;

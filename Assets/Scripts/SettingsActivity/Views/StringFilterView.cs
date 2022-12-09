@@ -6,8 +6,8 @@ namespace CustomerAssistant.SettingsActivity.Views
     [AddComponentMenu(nameof(StringFilterView) + " in SettingsActivity")]
     public class StringFilterView : FilterView
     {
-        [SerializeField] private InputField _inputField;
-
         public InputField InputField => _inputField;
+
+        [SerializeField] private InputField _inputField;
     }
 }

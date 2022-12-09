@@ -23,15 +23,15 @@ namespace CustomerAssistant.DummyActivity
     {
         [SerializeField] private GameObject _loadingScreen;
 
-        [SerializeField] FilterConfig _filterConfig;
+        [SerializeField] private FilterConfig _filterConfig;
 
-        [SerializeField] ProductView _pantsView;
+        [SerializeField] private ProductView _pantsView;
 
-        [SerializeField] ProductView _shirtsView;
+        [SerializeField] private ProductView _shirtsView;
 
-        [SerializeField] ProductView _tShirtView;
+        [SerializeField] private ProductView _tShirtView;
 
-        [SerializeField] DummyMainView _mainView;
+        [SerializeField] private DummyMainView _mainView;
 
         private ProductController _pantsController;
 
@@ -72,7 +72,7 @@ namespace CustomerAssistant.DummyActivity
             products.AddRange(DataLoader.GetProducts());
 
             _favoritesModel = new FavoritesModel();
-            
+
             _pantsController = new ProductController(_pantsView, _mainView,
                 GetProductsOfType(Clothes.PANTS, products), _filterConfig, _favoritesModel);
 
@@ -83,7 +83,7 @@ namespace CustomerAssistant.DummyActivity
                 GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig, _favoritesModel);
 
             _activityController = new ActivityController(_mainView, _favoritesModel);
-            
+
             _loadingScreen.SetActive(false);
         }
 

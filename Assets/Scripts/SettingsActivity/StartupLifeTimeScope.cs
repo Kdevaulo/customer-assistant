@@ -10,9 +10,9 @@ namespace CustomerAssistant.SettingsActivity
     public class StartupLifeTimeScope : MonoBehaviour
     {
         [SerializeField] private FilterConfig _filterConfig;
-        
+
         [SerializeField] private BackButtonView _backButtonView;
-        
+
         [SerializeField] private FiltersContainerView _filtersContainerView;
 
         private void Start()
