@@ -1,6 +1,8 @@
 using CustomerAssistant.FavoritesActivity.Controllers;
 using CustomerAssistant.FavoritesActivity.Views;
 
+using TMPro;
+
 using UnityEngine;
 
 namespace CustomerAssistant.FavoritesActivity
@@ -12,11 +14,16 @@ namespace CustomerAssistant.FavoritesActivity
 
         [SerializeField] private RectTransform _contentContainer;
 
+        [SerializeField] private RectTransform _notificationCanvas;
+
         [SerializeField] private FavoriteImageView _favoriteContainerPrefab;
+
+        [SerializeField] private TextMeshProUGUI _notificationPrefab;
 
         private void Start()
         {
-            _ = new ActivityController(_backButtonView, _contentContainer, _favoriteContainerPrefab);
+            _ = new ActivityController(_backButtonView, _contentContainer, _favoriteContainerPrefab,
+                _notificationCanvas, _notificationPrefab);
         }
     }
 }

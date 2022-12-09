@@ -14,6 +14,8 @@ using DummyActivity.Views;
 
 using Mapbox.Json;
 
+using TMPro;
+
 using UnityEngine;
 
 namespace CustomerAssistant.DummyActivity
@@ -32,6 +34,10 @@ namespace CustomerAssistant.DummyActivity
         [SerializeField] private ProductView _tShirtView;
 
         [SerializeField] private DummyMainView _mainView;
+
+        [SerializeField] private RectTransform _notificationCanvas;
+
+        [SerializeField] private TextMeshProUGUI _notificationTextMeshPro;
 
         private ProductController _pantsController;
 
@@ -82,7 +88,8 @@ namespace CustomerAssistant.DummyActivity
             _tShirtsController = new ProductController(_tShirtView, _mainView,
                 GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig, _favoritesModel);
 
-            _activityController = new ActivityController(_mainView, _favoritesModel);
+            _activityController =
+                new ActivityController(_mainView, _favoritesModel, _notificationCanvas, _notificationTextMeshPro);
 
             _loadingScreen.SetActive(false);
         }

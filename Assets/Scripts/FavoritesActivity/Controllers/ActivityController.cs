@@ -8,8 +8,11 @@ using Cysharp.Threading.Tasks;
 
 using Mapbox.Json;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.WSA;
 
 using Object = UnityEngine.Object;
 
@@ -21,23 +24,32 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
 
         private readonly RectTransform _contentContainer;
 
+        private readonly RectTransform _notificationCanvas;
+
+        private readonly TextMeshProUGUI _notificationTextMeshPro;
+
         private readonly FavoriteImageView _favoriteContainerPrefab;
 
         private readonly List<Product> _favoriteProducts = new List<Product>();
 
         private readonly List<FavoriteImageView> _favoriteViews = new List<FavoriteImageView>();
 
-        private Dictionary<FavoriteImageView, Product> _productViewCollection =
+        private readonly Dictionary<FavoriteImageView, Product> _viewProductCollection =
             new Dictionary<FavoriteImageView, Product>();
 
-        private Dictionary<Product, string> _productKeyCollection = new Dictionary<Product, string>();
+        private readonly Dictionary<Product, string> _productKeyCollection = new Dictionary<Product, string>();
+
+        private string _keyPrefs = string.Empty;
 
         public ActivityController(BackButtonView backBackButtonView,
-            RectTransform contentContainer, FavoriteImageView favoriteContainerPrefab)
+            RectTransform contentContainer, FavoriteImageView favoriteContainerPrefab, RectTransform notificationCanvas,
+            TextMeshProUGUI notificationTextMeshPro)
         {
             _backBackButtonView = backBackButtonView;
             _contentContainer = contentContainer;
             _favoriteContainerPrefab = favoriteContainerPrefab;
+            _notificationCanvas = notificationCanvas;
+            _notificationTextMeshPro = notificationTextMeshPro;
 
             Initialize();
         }
@@ -85,8 +97,13 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
         {
             ChangeContainerHeight(_favoriteProducts.Count);
 
-            _productViewCollection.Clear();
+            _viewProductCollection.Clear();
             _favoriteViews.Clear();
+
+            if (_favoriteProducts.Count == 0)
+            {
+                Utils.CreateNotification("No favorite items", _notificationTextMeshPro, _notificationCanvas);
+            }
 
             foreach (var favoriteProduct in _favoriteProducts)
             {
@@ -103,7 +120,7 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
                 targetImage.rectTransform.localScale = new Vector3(1 / ratio, 1 / ratio, 1);
 
                 _favoriteViews.Add(spawnedView);
-                _productViewCollection.Add(spawnedView, favoriteProduct);
+                _viewProductCollection.Add(spawnedView, favoriteProduct);
             }
         }
 
@@ -111,7 +128,7 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
         {
             UnsubscribeButtons(imageView);
 
-            var productForRemoving = _productViewCollection[imageView];
+            var productForRemoving = _viewProductCollection[imageView];
             _favoriteProducts.Remove(productForRemoving);
             _favoriteViews.Remove(imageView);
 
@@ -127,7 +144,17 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
 
         private void HandleUseButtonClick(FavoriteImageView imageView)
         {
-            // todo: add to playerPrefs
+            var product = _viewProductCollection[imageView];
+
+            var key = _productKeyCollection[product];
+
+            if (_keyPrefs.Contains(key)) return;
+
+            _keyPrefs += key + Constants.PrefsKeysSeparator;
+
+            PlayerPrefs.SetString(Constants.PrefsKeysContainerPattern, _keyPrefs);
+
+            Utils.CreateNotification("Item used", _notificationTextMeshPro, _notificationCanvas);
         }
 
         private void ChangeContainerHeight(int productsCount)
