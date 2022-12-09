@@ -650,7 +650,6 @@ MonoBehaviour:
   _panSpeed: 1
   _zoomSpeed: 0.25
   _referenceCamera: {fileID: 1787361574}
-  _raycaster: {fileID: 0}
   _mapManager: {fileID: 555018383}
   _useDegreeMethod: 0
 --- !u!1 &681920255
