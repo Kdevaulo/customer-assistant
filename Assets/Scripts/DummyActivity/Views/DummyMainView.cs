@@ -15,6 +15,12 @@ namespace DummyActivity.Views
 
         [SerializeField] private Toggle[] _infoToggles;
 
+        [SerializeField] private GameObject _pantsIndicator;
+
+        [SerializeField] private GameObject _tShirtsIndicator;
+
+        [SerializeField] private GameObject _shirtsIndicator;
+
         [SerializeField] private Text _message;
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
@@ -56,6 +62,21 @@ namespace DummyActivity.Views
         public void HandleAddToFavoriteButtonClick()
         {
             AddToFavoriteButtonClicked.Invoke();
+        }
+
+        public void ActivatePantsIndicator()
+        {
+            _pantsIndicator.SetActive(true);
+        }
+
+        public void ActivateTShirtsIndicator()
+        {
+            _tShirtsIndicator.SetActive(true);
+        }
+
+        public void ActivateShirtsIndicator()
+        {
+            _shirtsIndicator.SetActive(true);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CustomerAssistant.FavoritesActivity.Views
     public class FavoriteImageView : MonoBehaviour
     {
         public event Action<FavoriteImageView> RemoveButtonClicked = delegate { };
-        public event Action<FavoriteImageView> UseButtonClicked = delegate { };
+        public event Action<FavoriteImageView, bool> ToggleSwitched = delegate { };
 
         public Image TargetImage => _targetImage;
 
@@ -26,28 +26,45 @@ namespace CustomerAssistant.FavoritesActivity.Views
 
         [SerializeField] private Button _removeButton;
 
-        [SerializeField] private Button _useButton;
+        [SerializeField] private Toggle _switchToggle;
+
+        [SerializeField] private Text _toggleText;
 
         private void OnEnable()
         {
             _removeButton.onClick.AddListener(HandleRemoveButtonClick);
-            _useButton.onClick.AddListener(HandleUseButtonClick);
+            _switchToggle.onValueChanged.AddListener(HandleToggleSwitch);
         }
 
         private void OnDisable()
         {
             _removeButton.onClick.RemoveListener(HandleRemoveButtonClick);
-            _useButton.onClick.RemoveListener(HandleUseButtonClick);
+            _switchToggle.onValueChanged.RemoveListener(HandleToggleSwitch);
         }
 
+        public void SetOnText()
+        {
+            _toggleText.text = "Switch On";
+        }
+
+        public void SetOffText()
+        {
+            _toggleText.text = "Switch Off";
+        }
+
+        public void SetToggleActive(bool value)
+        {
+            _switchToggle.SetIsOnWithoutNotify(value);
+        }
+        
         private void HandleRemoveButtonClick()
         {
             RemoveButtonClicked.Invoke(this);
         }
 
-        private void HandleUseButtonClick()
+        private void HandleToggleSwitch(bool isActive)
         {
-            UseButtonClicked.Invoke(this);
+            ToggleSwitched.Invoke(this, isActive);
         }
     }
 }

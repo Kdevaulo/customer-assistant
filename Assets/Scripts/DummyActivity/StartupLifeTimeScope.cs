@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -49,6 +50,8 @@ namespace CustomerAssistant.DummyActivity
 
         private FavoritesModel _favoritesModel;
 
+        private List<Product> _favorites = new List<Product>();
+
         private void Start()
         {
             InitializeAsync().Forget();
@@ -79,17 +82,51 @@ namespace CustomerAssistant.DummyActivity
 
             _favoritesModel = new FavoritesModel();
 
-            _pantsController = new ProductController(_pantsView, _mainView,
-                GetProductsOfType(Clothes.PANTS, products), _filterConfig, _favoritesModel);
+            var keyPrefs = PlayerPrefs.GetString(Constants.PrefsKeysContainerPattern);
 
-            _shirtsController = new ProductController(_shirtsView, _mainView,
-                GetProductsOfType(Clothes.SHIRTS, products), _filterConfig, _favoritesModel);
+            var usedFavorites = new List<Product>();
+
+            Utils.GetFavoritesFromPrefs(_favorites, (key, product) =>
+            {
+                _favorites.Add(product);
+
+                if (keyPrefs.Contains(key))
+                {
+                    usedFavorites.Add(product);
+                }
+            });
+
+            var favoritePants = GetProductsOfType(Clothes.PANTS, usedFavorites);
+            var favoriteTShirts = GetProductsOfType(Clothes.T_SHIRTS, usedFavorites);
+            var favoriteShirts = GetProductsOfType(Clothes.SHIRTS, usedFavorites);
+
+            if (favoritePants != null)
+            {
+                _mainView.ActivatePantsIndicator();
+            }
+
+            if (favoriteTShirts != null)
+            {
+                _mainView.ActivateTShirtsIndicator();
+            }
+
+            if (favoriteShirts != null)
+            {
+                _mainView.ActivateShirtsIndicator();
+            }
+
+            _pantsController = new ProductController(_pantsView, _mainView,
+                favoritePants ?? GetProductsOfType(Clothes.PANTS, products), _filterConfig, _favoritesModel);
 
             _tShirtsController = new ProductController(_tShirtView, _mainView,
-                GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig, _favoritesModel);
+                favoriteTShirts ?? GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig, _favoritesModel);
+
+            _shirtsController = new ProductController(_shirtsView, _mainView,
+                favoriteShirts ?? GetProductsOfType(Clothes.SHIRTS, products), _filterConfig, _favoritesModel);
 
             _activityController =
-                new ActivityController(_mainView, _favoritesModel, _notificationCanvas, _notificationTextMeshPro);
+                new ActivityController(_mainView, _favoritesModel, _notificationCanvas, _notificationTextMeshPro,
+                    _favorites);
 
             _loadingScreen.SetActive(false);
         }

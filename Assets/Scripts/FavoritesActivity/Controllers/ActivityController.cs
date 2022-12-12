@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using CustomerAssistant.DummyActivity;
 using CustomerAssistant.FavoritesActivity.Views;
 
 using Cysharp.Threading.Tasks;
 
-using Mapbox.Json;
-
 using TMPro;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.WSA;
 
 using Object = UnityEngine.Object;
 
@@ -38,6 +36,8 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
             new Dictionary<FavoriteImageView, Product>();
 
         private readonly Dictionary<Product, string> _productKeyCollection = new Dictionary<Product, string>();
+
+        private List<Product> _usedFavorites = new List<Product>();
 
         private string _keyPrefs = string.Empty;
 
@@ -70,27 +70,18 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
 
         private void LoadFavorites()
         {
-            _favoriteProducts.Clear();
+            _keyPrefs = PlayerPrefs.GetString(Constants.PrefsKeysContainerPattern);
 
-            for (int i = 0; i < Constants.MaxFavorites; i++)
+            Utils.GetFavoritesFromPrefs(_favoriteProducts, (key, product) =>
             {
-                // todo: remove key dependency on index using route table
-                var key = string.Format(Constants.PrefsKeyPattern, i);
-
-                if (!PlayerPrefs.HasKey(key))
-                {
-                    break;
-                }
-
-                var serializedString = PlayerPrefs.GetString(key);
-
-                var product = JsonConvert.DeserializeObject<Product>(serializedString);
-
-                product.Sprite = Utils.ConvertSprite(product.Image);
-
                 _productKeyCollection.Add(product, key);
                 _favoriteProducts.Add(product);
-            }
+
+                if (_keyPrefs.Contains(key))
+                {
+                    _usedFavorites.Add(product);
+                }
+            });
         }
 
         private void InitializeFavorites()
@@ -122,11 +113,25 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
                 _favoriteViews.Add(spawnedView);
                 _viewProductCollection.Add(spawnedView, favoriteProduct);
             }
+
+            foreach (var usedProduct in _usedFavorites)
+            {
+                var view = _viewProductCollection.First(pair => pair.Value.Image == usedProduct.Image).Key;
+                view.SetOffText(); // note: change text and toggle if favorite product already uses
+                view.SetToggleActive(true);
+            }
+        }
+
+        private void SubscribeButtons(FavoriteImageView imageView)
+        {
+            imageView.RemoveButtonClicked += HandleRemoveButtonClick;
+            imageView.ToggleSwitched += HandleToggleSwitch;
         }
 
         private void HandleRemoveButtonClick(FavoriteImageView imageView)
         {
             UnsubscribeButtons(imageView);
+            HandleToggleSwitch(imageView, false);
 
             var productForRemoving = _viewProductCollection[imageView];
             _favoriteProducts.Remove(productForRemoving);
@@ -142,19 +147,43 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
             UpdateFavoritesPositions();
         }
 
-        private void HandleUseButtonClick(FavoriteImageView imageView)
+        private void UnsubscribeButtons(FavoriteImageView imageView)
+        {
+            imageView.RemoveButtonClicked -= HandleRemoveButtonClick;
+            imageView.ToggleSwitched -= HandleToggleSwitch;
+        }
+
+        private void HandleToggleSwitch(FavoriteImageView imageView, bool isActive)
         {
             var product = _viewProductCollection[imageView];
 
             var key = _productKeyCollection[product];
 
-            if (_keyPrefs.Contains(key)) return;
+            var containsFlag = _keyPrefs.Contains(key);
 
-            _keyPrefs += key + Constants.PrefsKeysSeparator;
+            if (isActive && containsFlag || !isActive && !containsFlag)
+            {
+                return;
+            }
+
+            if (isActive) // note: if isActive && !containsFlag
+            {
+                imageView.SetOffText();
+
+                _keyPrefs += key + Constants.PrefsKeysSeparator;
+
+                Utils.CreateNotification("Item used", _notificationTextMeshPro, _notificationCanvas);
+            }
+            else
+            {
+                imageView.SetOnText();
+
+                _keyPrefs = _keyPrefs.Replace(key + Constants.PrefsKeysSeparator, string.Empty);
+
+                Utils.CreateNotification("Item not using", _notificationTextMeshPro, _notificationCanvas);
+            }
 
             PlayerPrefs.SetString(Constants.PrefsKeysContainerPattern, _keyPrefs);
-
-            Utils.CreateNotification("Item used", _notificationTextMeshPro, _notificationCanvas);
         }
 
         private void ChangeContainerHeight(int productsCount)
@@ -183,18 +212,6 @@ namespace CustomerAssistant.FavoritesActivity.Controllers
             {
                 PlayerPrefs.DeleteKey(key);
             }
-        }
-
-        private void SubscribeButtons(FavoriteImageView imageView)
-        {
-            imageView.RemoveButtonClicked += HandleRemoveButtonClick;
-            imageView.UseButtonClicked += HandleUseButtonClick;
-        }
-
-        private void UnsubscribeButtons(FavoriteImageView imageView)
-        {
-            imageView.RemoveButtonClicked -= HandleRemoveButtonClick;
-            imageView.UseButtonClicked -= HandleUseButtonClick;
         }
 
         private void HandleBackBackButtonClick()

@@ -1,6 +1,11 @@
 using System;
+using System.Collections.Generic;
+
+using CustomerAssistant.DummyActivity;
 
 using Cysharp.Threading.Tasks;
+
+using Mapbox.Json;
 
 using TMPro;
 
@@ -13,6 +18,30 @@ namespace CustomerAssistant
 {
     public static class Utils
     {
+        public static void GetFavoritesFromPrefs(List<Product> products, Action<string, Product> action)
+        {
+            products.Clear();
+
+            for (int i = 0; i < Constants.MaxFavorites; i++)
+            {
+                // todo: remove key dependency on index using route table
+                var key = string.Format(Constants.PrefsKeyPattern, i);
+
+                if (!PlayerPrefs.HasKey(key))
+                {
+                    break;
+                }
+
+                var serializedString = PlayerPrefs.GetString(key);
+
+                var product = JsonConvert.DeserializeObject<Product>(serializedString);
+
+                product.Sprite = ConvertSprite(product.Image);
+
+                action.Invoke(key, product);
+            }
+        }
+
         public static Sprite ConvertSprite(string image)
         {
             byte[] imageBytes = Convert.FromBase64String(image);
@@ -39,7 +68,7 @@ namespace CustomerAssistant
         {
             await UniTask.Delay(TimeSpan.FromSeconds(seconds));
 
-            if (target) // note: not use token for faster solution
+            if (target) // todo: change to CTS using
             {
                 target.SetActive(false);
 
