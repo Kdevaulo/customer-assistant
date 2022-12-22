@@ -23,7 +23,7 @@ namespace CustomerAssistant.MapKit
         [SerializeField] private GameObject _markerPrefab;
 
         [SerializeField] private GameObject _noInternetConnectionCanvas;
-        
+
         [SerializeField] private GameObject _loadingScreen;
 
         [SerializeField] private float _spawnScale = 50f;
@@ -81,7 +81,7 @@ namespace CustomerAssistant.MapKit
             }
 
             InitializePoints();
-            
+
             _loadingScreen.SetActive(false);
         }
 
@@ -111,6 +111,11 @@ namespace CustomerAssistant.MapKit
                 instance.transform.localPosition = _map.GeoToWorldPosition(_locations[i]);
                 instance.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
 
+                if (!TrySetRendererSortingOrder(instance, i))
+                {
+                    LogMarkerError();
+                }
+
                 _spawnedObjects.Add(instance.transform);
             }
         }
@@ -139,6 +144,24 @@ namespace CustomerAssistant.MapKit
 
             PlayerPrefs.SetString("Shops", json);
             PlayerPrefs.Save();
+        }
+
+        private bool TrySetRendererSortingOrder(GameObject target, int sortingOrder)
+        {
+            var spriteRenderer = target.GetComponentInChildren<SpriteRenderer>();
+
+            if (spriteRenderer == null)
+            {
+                return false;
+            }
+
+            spriteRenderer.sortingOrder = sortingOrder;
+            return true;
+        }
+
+        private void LogMarkerError()
+        {
+            Debug.LogError($"Marker does not have SpriteRenderer {nameof(ShopPresenter)} {nameof(InitializePoints)}");
         }
     }
 
