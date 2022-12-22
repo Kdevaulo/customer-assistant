@@ -13,6 +13,8 @@ namespace CustomerAssistant.DummyActivity.Models
 {
     public class ProductsModel
     {
+        private readonly bool _usingFavoriteProducts;
+
         private List<Product> _products = new List<Product>();
 
         private int _itemIndex;
@@ -25,11 +27,12 @@ namespace CustomerAssistant.DummyActivity.Models
 
         private List<Product> _filteredItems = new List<Product>();
 
-        public ProductsModel(List<Product> products, FilterConfig filterConfig)
+        public ProductsModel(List<Product> products, FilterConfig filterConfig, bool usingFavoriteProducts)
         {
             _products = products;
 
             _filterConfig = filterConfig;
+            _usingFavoriteProducts = usingFavoriteProducts;
 
             Initialize();
         }
@@ -103,7 +106,7 @@ namespace CustomerAssistant.DummyActivity.Models
 
         private void ApplyFilters()
         {
-            _filteredItems = FilterItems();
+            _filteredItems = _usingFavoriteProducts ? _products : FilterItems();
         }
 
         private void SetEmptyItem()

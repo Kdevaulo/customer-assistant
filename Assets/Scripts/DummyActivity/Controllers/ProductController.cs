@@ -24,8 +24,10 @@ namespace CustomerAssistant.DummyActivity.Controllers
 
         private FilterConfig _filterConfig;
 
+        private bool _usingFavoriteProducts;
+
         public ProductController(ProductView view, DummyMainView mainView, List<Product> products,
-            FilterConfig filterConfig, FavoritesModel favoritesModel)
+            FilterConfig filterConfig, FavoritesModel favoritesModel, bool usingFavoriteProduct)
         {
             if (products == null)
                 return;
@@ -35,6 +37,7 @@ namespace CustomerAssistant.DummyActivity.Controllers
             _products = products;
             _filterConfig = filterConfig;
             _favoritesModel = favoritesModel;
+            _usingFavoriteProducts = usingFavoriteProduct;
 
             GenerateItems();
         }
@@ -81,9 +84,9 @@ namespace CustomerAssistant.DummyActivity.Controllers
 
         private void Initialize()
         {
-            _model = new ProductsModel(_products, _filterConfig);
+            _model = new ProductsModel(_products, _filterConfig, _usingFavoriteProducts);
 
-            if (_model.ItemImage == null)
+            if (_model.ItemImage == null && !_usingFavoriteProducts)
             {
                 Clothes clothesType = _products[0].Type;
                 _view.ButtonImage.gameObject.SetActive(false);
