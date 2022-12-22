@@ -60,8 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef3436b6b78c465a8d97b07f3a07da4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radiusPoint: {fileID: 2513086306519015443}
   RingTransform: {fileID: 7488201816773883585}
+  _radiusPoint: {fileID: 2513086306519015443}
 --- !u!1 &222633379851104422
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 222633379851104422}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0}
+  m_LocalScale: {x: 0.8485928, y: 0.8485928, z: 0}
   m_Children:
   - {fileID: 2513086306519015443}
   m_Father: {fileID: 2292570585182416066}
