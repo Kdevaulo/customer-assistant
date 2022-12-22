@@ -1,3 +1,5 @@
+using System;
+
 using CustomerAssistant.DummyActivity;
 using CustomerAssistant.MapKit;
 
@@ -12,6 +14,8 @@ namespace CustomerAssistant.DatabaseLoadSystem
 {
     public static class DataLoader
     {
+        public static event Action ErrorOnLoad = delegate { };
+
         private static ShopData[] ShopDataCollection;
 
         private static Product[] Products;
@@ -22,13 +26,13 @@ namespace CustomerAssistant.DatabaseLoadSystem
 
             using (var webRequest = UnityWebRequest.Get("http://customer-assistant.site/getShops.php"))
             {
-                await webRequest.SendWebRequest();
+                webRequest.SendWebRequest();
 
                 await UniTask.WaitUntil(() => webRequest.isDone);
 
                 if (webRequest.error != null)
                 {
-                    Debug.LogError("Getting shops data failed: " + webRequest.error);
+                    ErrorOnLoad.Invoke();
                 }
                 else
                 {
@@ -50,18 +54,17 @@ namespace CustomerAssistant.DatabaseLoadSystem
             using (UnityWebRequest webRequest =
                    UnityWebRequest.Post("http://customer-assistant.site/getProducts.php", form))
             {
-                await webRequest.SendWebRequest();
+                webRequest.SendWebRequest();
 
                 await UniTask.WaitUntil(() => webRequest.isDone);
 
                 if (webRequest.error != null)
                 {
-                    Debug.LogError($"Getting items data by shop IDs ({shopIDs}) failed: " + webRequest.error);
+                    ErrorOnLoad.Invoke();
+                    return;
                 }
-                else
-                {
-                    loadedString = webRequest.downloadHandler.text;
-                }
+
+                loadedString = webRequest.downloadHandler.text;
             }
 
             // note: needs cz bool in database looks like [0,1](int)

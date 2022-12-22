@@ -52,6 +52,8 @@ namespace CustomerAssistant.DummyActivity
 
         private List<Product> _favorites = new List<Product>();
 
+        private bool _errorOnLoad = false;
+
         private void Start()
         {
             InitializeAsync().Forget();
@@ -76,9 +78,16 @@ namespace CustomerAssistant.DummyActivity
                 }
             }
 
+            DataLoader.ErrorOnLoad += HandleErrorOnLoad;
+
             await DataLoader.LoadItemsByShopIDAsync(stringBuilder.ToString());
 
-            products.AddRange(DataLoader.GetProducts());
+            DataLoader.ErrorOnLoad -= HandleErrorOnLoad;
+
+            if (!_errorOnLoad)
+            {
+                products.AddRange(DataLoader.GetProducts());
+            }
 
             _favoritesModel = new FavoritesModel();
 
@@ -115,20 +124,32 @@ namespace CustomerAssistant.DummyActivity
                 _mainView.ActivateShirtsIndicator();
             }
 
+            var pantsFlag = favoritePants != null;
+            var tShirtsFlag = favoriteTShirts != null;
+            var shirtsFlag = favoriteShirts != null;
+
             _pantsController = new ProductController(_pantsView, _mainView,
-                favoritePants ?? GetProductsOfType(Clothes.PANTS, products), _filterConfig, _favoritesModel);
+                pantsFlag ? favoritePants : GetProductsOfType(Clothes.PANTS, products), _filterConfig, _favoritesModel,
+                pantsFlag);
 
             _tShirtsController = new ProductController(_tShirtView, _mainView,
-                favoriteTShirts ?? GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig, _favoritesModel);
+                tShirtsFlag ? favoriteTShirts : GetProductsOfType(Clothes.T_SHIRTS, products), _filterConfig,
+                _favoritesModel, tShirtsFlag);
 
             _shirtsController = new ProductController(_shirtsView, _mainView,
-                favoriteShirts ?? GetProductsOfType(Clothes.SHIRTS, products), _filterConfig, _favoritesModel);
+                shirtsFlag ? favoriteShirts : GetProductsOfType(Clothes.SHIRTS, products), _filterConfig,
+                _favoritesModel, shirtsFlag);
 
             _activityController =
                 new ActivityController(_mainView, _favoritesModel, _notificationCanvas, _notificationTextMeshPro,
                     _favorites);
 
             _loadingScreen.SetActive(false);
+        }
+
+        private void HandleErrorOnLoad()
+        {
+            _errorOnLoad = true;
         }
 
         private List<Product> GetProductsOfType(Clothes type, List<Product> products)

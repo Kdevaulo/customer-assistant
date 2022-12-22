@@ -22,6 +22,10 @@ namespace CustomerAssistant.MapKit
 
         [SerializeField] private GameObject _markerPrefab;
 
+        [SerializeField] private GameObject _noInternetConnectionCanvas;
+        
+        [SerializeField] private GameObject _loadingScreen;
+
         [SerializeField] private float _spawnScale = 50f;
 
         private ShopData[] _shopData;
@@ -29,6 +33,8 @@ namespace CustomerAssistant.MapKit
         private Vector2d[] _locations;
 
         private List<Transform> _spawnedObjects;
+
+        private bool _errorOnLoad = false;
 
         private void OnEnable()
         {
@@ -63,9 +69,20 @@ namespace CustomerAssistant.MapKit
 
         private async UniTask InitializeAsync()
         {
+            DataLoader.ErrorOnLoad += HandleErrorOnLoad;
+
             await SetShopDataAsync();
 
+            DataLoader.ErrorOnLoad -= HandleErrorOnLoad;
+
+            if (_errorOnLoad)
+            {
+                return;
+            }
+
             InitializePoints();
+            
+            _loadingScreen.SetActive(false);
         }
 
         private async UniTask SetShopDataAsync()
@@ -73,6 +90,12 @@ namespace CustomerAssistant.MapKit
             await DataLoader.LoadShopDataAsync();
 
             _shopData = DataLoader.GetShopData();
+        }
+
+        private void HandleErrorOnLoad()
+        {
+            _noInternetConnectionCanvas.gameObject.SetActive(true);
+            _errorOnLoad = true;
         }
 
         private void InitializePoints()

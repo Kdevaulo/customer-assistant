@@ -98,7 +98,8 @@ namespace Mapbox.Unity
 					   && throwExecptions)
 					{
 						configuration.AccessToken = string.Empty;
-						Debug.LogError(new InvalidTokenException(response.Status.ToString().ToString()));
+						// note: when internet connection is lost
+						//Debug.LogError(new InvalidTokenException(response.Status.ToString().ToString()));
 					}
 				});
 
