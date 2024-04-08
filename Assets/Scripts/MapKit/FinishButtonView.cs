@@ -17,7 +17,7 @@ namespace CustomerAssistant.MapKit
 
             var shops = JsonConvert.DeserializeObject<ShopJson>(json);
 
-            if (shops.Shops.Count > 0)
+            if (json != string.Empty && shops.Shops.Count > 0)
             {
                 async UniTaskVoid SwitchAsync()
                 {
